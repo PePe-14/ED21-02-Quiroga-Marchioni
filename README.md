@@ -1,7 +1,7 @@
 # ED21-02-Quiroga-Marchioni
  Taller EDD
 /**
-Dia_10/09/2021:\n
+Dia_10/09/2021:
 	+Creacion_del_github
 	+Lectura_del_taller
 Dia_11/09/2021:
