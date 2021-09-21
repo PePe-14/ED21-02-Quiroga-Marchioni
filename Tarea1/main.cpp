@@ -3,5 +3,6 @@ using std::cout;
 using std::endl;
 int main() {
     cout << "Hello, World!" << endl;
+    cout << "xd" << endl;
     return 0;
 }
