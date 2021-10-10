@@ -1,3 +1,0 @@
-C:/Users/jmarc/Documents/GitHub/ED21-02-Quiroga-Marchioni/Tarea1/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-C:/Users/jmarc/Documents/GitHub/ED21-02-Quiroga-Marchioni/Tarea1/cmake-build-debug/CMakeFiles/Tarea1.dir
-C:/Users/jmarc/Documents/GitHub/ED21-02-Quiroga-Marchioni/Tarea1/cmake-build-debug/CMakeFiles/edit_cache.dir
