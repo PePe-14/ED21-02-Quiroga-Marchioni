@@ -1,4 +1,4 @@
-![UCN](docs/images/60x60-ucn-negro.png)
+![UCN](docs/Imagenes/60x60-ucn-negro.png)
 
 
 # Proyecto: Detección y reidentificación de caras en secuencias de imágenes o video
@@ -11,11 +11,11 @@
 
 ### Bitácora
 
-[Ver Bitácora](docs/BITACORA.md)
+* [Ver Bitácora](docs/BITACORA.md)
 
 ### Resumen
 
-<Agregar el resumen del reporte técnico>
+* [Ver Resumen Tecnico](docs/RESUMEN.md)
 
 <Colocar alguna imágen en la portada>
 
