@@ -6,8 +6,8 @@
 
 ### Integrantes
 
-* Jose Marchioni (Cordinador)
-* Thomas Quiroga (Bitacora)
+* José Marchioni Clavería (Coordinador)
+* Thomas Quiroga Espinoza (Bitacora)
 
 ### Bitácora
 
