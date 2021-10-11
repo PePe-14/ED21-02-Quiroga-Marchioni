@@ -69,42 +69,34 @@ Luego haremos uso del archivo .XML que tiene como objetivo reconocer las caras e
 
 ### 2.2 Diseño 
 
-
-
-Explicar los componentes (módulos o clases) utilizados para resolver el problema. Indicar arquitectura propuesta, diagrama de clases u otro artefacto que estime conveniente para explicar el diseño de su implimentación.
+La manera en que diseñamos el taller para la primera historia es simple porque no contiene muchas clases, así que procedere a nombrarlas y explicar su rol en el código
+* Clase Mat: Puede guardar matrices de varias dimesiones por lo que nosotros la usamos para guardar las imagenes.
+* Clase CascadeClassifier: Crea objetos de tipo clasificadores de cascada que en resumen se necesitan muchas imagenes para entrenar a esta función para saber identificar objetos. Esto sera utilizado para cargar el archivo que reconoce los rostros.
+* Clase Rect:  Puede declarar un tipo de variable que permite dibujar zonas rectangulares. Claramente esta clase nos servirá para crear los rectángulos rojos en las imágenes.
 
 ### 2.3 Implementación
  
 
-#### Detector de caras
+#### Detector de rostros
 
-El detector de caras utilizado fue xxx. Para utilizarlo se debe.... El código para detectar una cara en una imagen se muestra a continuación:
-
-#include "opencv2/imgproc.hpp"
-#include "opencv2/imgcodecs.hpp"
-#include "opencv2/highgui.hpp"
-#include "opencv2/objdetect.hpp"
-#include <iostream>
-
-
-    string path = "Resources/imagen2.jpg";
-    Mat img = imread(path);
+El archivo detector de caras utilizado fue haarcascade_frontalface_default.xml. Para utilizarlo se debe crear un objeto que contenga este archivo, por lo que la clase que lo puede contener es CascadeCalssifier;
+El código para detectar una cara en una imagen se muestra a continuación:
 
     CascadeClassifier faceCascade;
     faceCascade.load("haarcascade_frontalface_default.xml");
 
-    if (faceCascade.empty()) { cout << "no se cargo el archivo" << endl; }
-
     vector<Rect> faces;
     faceCascade.detectMultiScale(img,faces,1.1,10);
 
+En estas cuatro líneas se observa que el archivo .XML se carga a su correspondiente objeto y luego se crea una lista de rectangulos en la que con la ultima linea de codigo todas las caras que fueron detectadas tendran asignado un objeto tipo rectangulo.
+
+#### Creacion de los rectangulos
+    
     for (int i = 0; i < faces.size(); i++)
     {
         rectangle(img, faces[i].tl(), faces[i].br(), Scalar(0, 0,255),3);
     }
-    
-    imshow("Image", img);
-    waitKey(0);
+   El primero parametro de la funcion rectangulo es la image analisada, luego los 2 parametros siguientes son las escalas del rectangulo y por ultimo el color que en este caso sería rojo como se pidío.
 
 
 ## 3. Resultados obtenidos
