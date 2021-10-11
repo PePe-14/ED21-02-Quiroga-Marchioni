@@ -12,7 +12,7 @@
 
 ## Resumen 
 
-[Ver Resumen](docs/RESUMEN.md)
+* [Ver Resumen](docs/RESUMEN.md)
 > Agregar un resumen que describa el trabajo realizado y sus resultados. (Entre 150 y 180 palabras)
 > Más cosas...
 > El resumen indicarlo como cita con el comando `>`
