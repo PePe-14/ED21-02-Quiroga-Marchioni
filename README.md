@@ -11,7 +11,7 @@
 
 ### Bitácora
 
-[Ver Bitácora](docs/BITACORA.md)
+* [Ver Bitácora](docs/BITACORA.md)
 
 ### Resumen
 
