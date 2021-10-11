@@ -118,14 +118,16 @@ Analisando los resultados como grupo podemos decir que nuestra investigacion, co
 # Anexos
 
 ## Anexo A: Instalación librerías OpenCV
-                                     
+   >Se descargo he instalo OpenCV y la carpeta bin se agrego a las variables de entorno del sistema para que el sistema sepa donde ir a ejecutar los binarios referentes a      OpenCV.     
 
 ## Anexo B: Instalación de IDE y configuración librerías OpenCV
+    >Se descargo he instalo Visual Studio Community 2019. Una vez creado el proyecto vamos a propiedades de este y configuramos las líbrerias de OpenCV en Visual Studio. 
+    >Las líbrerias son las siguientes:
+    * Del directorio de VC++ (opencv\build\include) y (opencv\build\x64\vc15\lib)
+    * En la seccíon general de c++ agregamos el include siguiente (opencv\build\include\opencv2)
+    * En dependencias adicionales de la opcion vinculador (opencv_world453d.lib)
 
 # Referecia
 
-Indicar los libros, páginas web, documentos, etc. Utilizados en el trabajo. Por ejemplo:
-
-1. MONTERO, J.,Metodos matemáticos aplicados a la ganadería.3aed. Sevilla: Ediciones de la pradera,2007.
-2. LVARADO,   J.   P.,¿Qué   debe   contener   un   artículo   científico?.http://www.ie.tec.ac.cr/palvarado/pmwiki/index.php/MSc/Art\%c3\%adculoCient\%c3\%adfico. Fe-cha de acceso:13/Nov/2018
-
+1. Solano, G. (2020, 21 enero). Detección de Rostros con Haar Cascades. https://omes-va.com/deteccion-de-rostros-con-haar-cascades-python-opencv/.
+2. Murtaza’s Workshop - Robotics and AI. (2020, 13 diciembre). LEARN OPENCV C++ in 4 HOURS [Vídeo]. Youtube. https://youtu.be/2FYm3GOonhk.
