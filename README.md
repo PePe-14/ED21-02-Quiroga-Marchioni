@@ -17,7 +17,7 @@
 
 * [Ver Resumen Tecnico](docs/RESUMEN.md)
 
-* [Resultado Final](/docs/Imagenes/Resultado.png)
+![Resultado Final](/docs/Imagenes/Resultado.png)
 
 ### Documentos
 
