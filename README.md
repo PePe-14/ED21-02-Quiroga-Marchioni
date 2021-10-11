@@ -17,7 +17,7 @@
 
 * [Ver Resumen Tecnico](docs/RESUMEN.md)
 
-<Colocar alguna imágen en la portada>
+* [Resultado Final](/docs/Imagenes/Resultado.png)
 
 ### Documentos
 
