@@ -25,7 +25,7 @@ Las comparaciones deben concretarse con hechos y datos, sin frases ambiguas o t�
 
 ### 1.1 Descripción del problema
 
-Se nos presenta el desafío de construir un programa que reconozca los rostros de personas en imagenes o videos con el fin de identificarlos con un rectangulo rojo para que un guardia tenga la certeza del correcto funcionamiento del código.
+Se nos presenta el desafío de construir un programa que reconozca los rostros de personas en imagenes o videos con el fin de identificarlos con un rectángulo para que un guardia tenga la certeza del correcto funcionamiento del código.
 
 ### 1.2 Objetivos 
 
@@ -37,6 +37,7 @@ Construir un programa que detecte en una imagen los rostros de las personas y lo
 
 - [x] :+1: Creación del repositorio en github
 - [x] :+1: Instalación de Visual Studio 2019 y OpenCV
+- [x] :+1: Investigar como se reconocen rostros
 - [x] :+1: Código de identificacion facial
 
 Los objetivos específicos son acciones específicas que son desarrolladas para lograr cumplir el objetivo general, por ejemplo:
@@ -50,11 +51,17 @@ Los objetivos específicos son acciones específicas que son desarrolladas para 
 
 ### 1.3 Solución propuesta
 
-Esbozo de la solución propuesta, se espera que esta vaya evolucionando a medida que se avanza en el proyecto.
+Construir un código que permita reconocer rostros a partir de un archivo de extensión .XML que tiene en su implementación cumplir este objetivo y luego de esto mostrarle al usuario la imagen con los rostros señalados con el rectángulo rojo para probar que el algoritmo funciona.
 
 ## 2. Materiales y métodos
 
-Explicar brevemente como se espera desarrollar el trabajo de implementación.
+* IDE Visual Studio Community 2019 
+* Biblioteca OpenCV
+* Archivo haarcascade_frontalface_default.xml 
+* Imagen de rostros
+
+Configurando adecuandamente la IDE con OpenCV se logrará el primer paso para hacer uso de las librerias de esta y junto a la orientacion a objetos buscar y manipular los archivos necesarios para el analisis de las imágenes que se usarán. 
+Luego haremos uso del archivo .XML que tiene como objetivo reconocer las caras en las imágenes y asi podremos saber donde ubicar los rectángulos.
 
 ### 2.1 Instalación
 
@@ -92,7 +99,11 @@ La primera linea carga el archivo de entrenamiento... etc
 
 ## 3. Resultados obtenidos
 
+Una vez terminada la ejecución del programa esta nos arroja la imagen que habiamos preseleccionado cuyo contenido eran cinco personas pero con la diferencia de que ahora estarían identificadas por el código, mostrando asi cinco rectángulos rojos en cada rostro.
+
 ## 4. Conclusiones
+
+Analisando los resultados como grupo podemos decir que nuestra investigacion, comunicación como equipo y metodología usadas han sido exitosas ya que se obtuvieron los resultados esperados queriendo decir que se cumplio el objetivo general planteado anteriormente. Además recalcar que la interaccion entre la IDE y OpenCV facilita en gran parte el poder desarrollar nuestro taller. 
 
 # Anexos
 
