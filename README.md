@@ -15,7 +15,7 @@
 
 ### Resumen
 
-<Agregar el resumen del reporte técnico>
+* [Ver Resumen Tecnico](docs/RESUMEN.md)
 
 <Colocar alguna imágen en la portada>
 
