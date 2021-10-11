@@ -14,7 +14,13 @@
 * [Ver Bitácora](docs/BITACORA.md)
 
 ### Resumen
-
+>
+>
+>
+>
+>
+>
+>
 * [Ver Resumen Tecnico](docs/RESUMEN.md)
 
 ![Resultado Final](/docs/Imagenes/Resultado.png)
