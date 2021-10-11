@@ -12,10 +12,8 @@
 
 ## Resumen 
 
-* [Ver Resumen](RESUMEN.md)
-> Agregar un resumen que describa el trabajo realizado y sus resultados. (Entre 150 y 180 palabras)
-> Más cosas...
-> El resumen indicarlo como cita con el comando `>`
+>El Taller al que damos comienzo nos pide un sistema de vigilancia en base a reconocimiento de rostros. Para esta entrega en particular se solicita un programa que con ayuda de la biblioteca OpenCV podamos detectar los rostros en pantalla sea en una imagen, video o la cámara del ordenador, marcando esta en un rectángulo de color rojo, con el objetivo de que un guardia o administrador tengan acceso a los datos recopilados. 
+>Para lograr este objetivo instalamos la IDE Visual Studio Community 2019 junto a OpenCV e hicimos uso de las librerías que nos permiten usar los archivos que reconocen caras y sus distintas herramientas; estas herramientas se tuvieron que aprender a usar con tutoriales y algunos foros en los que se nos indico que tuvimos que descargar un archivo de extensión .XML para la detección de los rostros. Una vez que obtuvimos todo lo necesario hicimos el código a partir de lo aprendido en los videos y sacamos imágenes de internet para hacer pruebas las cuales resultaron con éxito.
 
 ## 1. Introducción
 
@@ -27,19 +25,19 @@ Las comparaciones deben concretarse con hechos y datos, sin frases ambiguas o t�
 
 ### 1.1 Descripción del problema
 
-Dado el laboratorio describir como se entiende el problema bajo sus propias palabras.
+Se nos presenta el desafío de construir un programa que reconozca los rostros de personas en imagenes o videos con el fin de identificarlos con un rectangulo rojo para que un guardia tenga la certeza del correcto funcionamiento del código.
 
 ### 1.2 Objetivos 
 
 **Objetivo General**
 
-El fin que se desea llegar. (Comenzar con un verbo: "Construir un sistema...", "Desarrollar un sistema...", etc)
+Construir un programa que detecte en una imagen los rostros de las personas y los identifique en un rectángulo rojo.
 
 **Objetivos específicos**
 
-- [x] :+1: Creacion_del_github
-- [x] :+1: Instalacion de visual studio 2019 y opencv
-- [x] :+1: Codigo de identificacion facial
+- [x] :+1: Creación del repositorio en github
+- [x] :+1: Instalación de Visual Studio 2019 y OpenCV
+- [x] :+1: Código de identificacion facial
 
 Los objetivos específicos son acciones específicas que son desarrolladas para lograr cumplir el objetivo general, por ejemplo:
 
