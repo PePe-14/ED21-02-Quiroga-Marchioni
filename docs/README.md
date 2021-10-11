@@ -17,15 +17,13 @@
 
 ## 1. Introducción
 
-La primera función de un reporte técnico es plasmar la información necesaria para que otras personas puedan reproducir el sistema propuesto o puedan entender su fucnionamiento . Para cumplir anterior se debe diferenciar claramente entre los artefactos de diseño e implementación. En el caso de un desarrollo tecnológico los algoritmos son importantes como componente de diseño y los programas generalmente son irrelevantes y deben resumidos o agregados en anexos en el documento. Los programas no son importantes en el documento, salvo si se quiere explicar conceptos expecíficos del lenguaje o del algoritmo implementado.
+En los últimos años, tecnologías como el reconocimiento automático de rostros y de otras figuras a partir de las cámaras esta cada vez mas presente en la vida diaria por lo que aprender a manipular y comprender estas nuevas tecnologías dará ventaja y nuevo conocimiento a los que se dispongan a estudiarlas. Para dar estos pasos se necesita de alguna necesidad de la que se pueda construir un proyecto, como lo es el caso de este taller que hará mejorar las habilidades y familiarizar conceptos que hasta ahora eran desconocidos
 
-La redacción debe ser formal y de modo impersonal. No se debe utlizar primera persona del singular o plural. Se debe evitar el uso de cualquier calificativo sustituyéndolo siempre utilizando datos concretos y rastreables en documentos o publicaciones a través de referencias bibliográficas. Por ejemplo, no calificar algo como: "muy importante", "sustancial", "muy usadoo" o "mucho mejor".
-
-Las comparaciones deben concretarse con hechos y datos, sin frases ambiguas o términos generales. Por ejemplo, nunca se debe redactar frases como "el método es mejor que el método B". Lo correcto es decir, el error promedio de el método A es de 5 %, correspondiendo a la mitad del error de 10% obtenido utilizando el método B". El tiempo verbal es usualmente presente. No se debe perder de vista que se está explicando ”como hacer algo”, en vez de ”qué se hizo”. Todo aspecto circunstancial es irrelevante para el documento. Por ejemplo, si se ha desarrollado en el laboratorio X, o en el curso Y, con el profesor Z, etc.
-
+Este taller trata de aprender a usar programas junto con herramientas que facilitan el reconocimiento facial para lograr un objetivo que se define en los puntos posteriores
+que tiene que ver con el poder de observar personas por las cámaras con el fin de llevar un registro de sus movimientos dentro de algún lugar. Para llevar a cabo los objetivos que planteamos más adelante se tendrá que recurrir a foros e investigar en detalle como usar las herramientas que nos proporcionan para trabajar de una manera eficiente.
 ### 1.1 Descripción del problema
 
-Se nos presenta el desafío de construir un programa que reconozca los rostros de personas en imagenes o videos con el fin de identificarlos con un rectángulo para que un guardia tenga la certeza del correcto funcionamiento del código.
+Se presenta el desafío de construir un programa que reconozca los rostros de personas en imagenes o videos con el fin de identificarlos con un rectángulo para que un guardia tenga la certeza del correcto funcionamiento del código.
 
 ### 1.2 Objetivos 
 
@@ -35,19 +33,19 @@ Construir un programa que detecte en una imagen los rostros de las personas y lo
 
 **Objetivos específicos**
 
-- [x] :+1: Creación del repositorio en github
+- [x] :+1: Creación del repositorio en Github
 - [x] :+1: Instalación de Visual Studio 2019 y OpenCV
 - [x] :+1: Investigar como se reconocen rostros
 - [x] :+1: Código de identificacion facial
 
 Los objetivos específicos son acciones específicas que son desarrolladas para lograr cumplir el objetivo general, por ejemplo:
 
-1. Investigar  el  estado  del  arte  de  visión  por  computador  y  audio  para  resolver  tareas de  clasificación unimodal y multimodal aplicado  al  problema  de  reconocimiento  de emociones.
-2.  Seleccionar  uno  o  dos  métodos  estudiados  en  el  estado  del  arte  para  la  estimación  de  laemoción utilizando datos unimodales o multimodales.
-3.  Implementar los métodos seleccionados utilizando el lenguaje de programación Python y laslibrerías suministradas por Pytorch.
-4.  Validar  los  resultados  por  medio  bases  de  datos  especializadas  para  el  desarrollo  deaplicaciones basadas en la estimación de la emoción y que incluyan varios modos de atributoscomo: imágenes, sonido y/o texto.
-5.  Proponer  mejoras  a  los  modelos  implementados  para  mejorar  su  desempeño  en  futurasimplementaciones o proyectos de investigación.
-6.  Difundir los resultados en medios científicos nacionales o internacionales.
+1. La creación de un repositorio en Github para poder ver en tiempo real el avance del taller.
+2. Descargar e instalar los programas que nos proporcionan.
+3. Investigar la configuración de los programas entre si para su correcto funcionamiento.
+4. Plantearse la metodología a seguir durante el proyecto. 
+5. Averiguar como funciona el reconocimiento facial y las herramientas necesarias para hacer un uso correcto.
+6. Aplicar lo aprendido construyendo un código que reconozca los rostros.
 
 ### 1.3 Solución propuesta
 
@@ -65,37 +63,49 @@ Luego haremos uso del archivo .XML que tiene como objetivo reconocer las caras e
 
 ### 2.1 Instalación
 
-Describir brevemente las librerías utilizadas para la instalación y programas utilizados para la ejecución del código. (Agregar una sección de anexo para describir como fueron instaladas las librerías de OpenCV y la IDE utilzada para el trabajo)
+* IDE Visual Studio Community 2019: Es una IDE que tendrá todo el código del taller en el que se harán las pruebas de código hasta completar el objetivo.  
+* Biblioteca OpenCV: Líbrería libre de visión artificial que cuenta con la mayoria de las herramientas y líbrerias para una correcta compatibilidad con la IDE.
+* Archivo haarcascade_frontalface_default.xml: Archivo clasificador pre entrenado que es capaz de reconocer rostros y otras formas.
 
 ### 2.2 Diseño 
+
+
 
 Explicar los componentes (módulos o clases) utilizados para resolver el problema. Indicar arquitectura propuesta, diagrama de clases u otro artefacto que estime conveniente para explicar el diseño de su implimentación.
 
 ### 2.3 Implementación
-
-Explicar brevemente algunos aspectos de implementación: Por ejemplo, detector de caras utilizado. Se pueden realizar pequeñas reseñas al código para indicar elementos importantes en el trabajo.
-
-Por ejemplo, 
+ 
 
 #### Detector de caras
 
 El detector de caras utilizado fue xxx. Para utilizarlo se debe.... El código para detectar una cara en una imagen se muestra a continuación:
 
-```c++
- 1. faceCascadePath = "./haarcascade_frontalface_default.xml";
- 2. faceCascade.load( faceCascadePath )
- 3. std::vector<Rect> faces;
- 4. faceCascade.detectMultiScale(frameGray, faces);
+#include "opencv2/imgproc.hpp"
+#include "opencv2/imgcodecs.hpp"
+#include "opencv2/highgui.hpp"
+#include "opencv2/objdetect.hpp"
+#include <iostream>
 
- 5. for ( size_t i = 0; i < faces.size(); i++ )
- 6. {
- 7.  int x1 = faces[i].x;
- 8.  int y1 = faces[i].y;
- 9.  int x2 = faces[i].x + faces[i].width;
-10.  int y2 = faces[i].y + faces[i].height;
-11. }
-```
-La primera linea carga el archivo de entrenamiento... etc
+
+    string path = "Resources/imagen2.jpg";
+    Mat img = imread(path);
+
+    CascadeClassifier faceCascade;
+    faceCascade.load("haarcascade_frontalface_default.xml");
+
+    if (faceCascade.empty()) { cout << "no se cargo el archivo" << endl; }
+
+    vector<Rect> faces;
+    faceCascade.detectMultiScale(img,faces,1.1,10);
+
+    for (int i = 0; i < faces.size(); i++)
+    {
+        rectangle(img, faces[i].tl(), faces[i].br(), Scalar(0, 0,255),3);
+    }
+    
+    imshow("Image", img);
+    waitKey(0);
+
 
 ## 3. Resultados obtenidos
 
@@ -103,11 +113,12 @@ Una vez terminada la ejecución del programa esta nos arroja la imagen que habia
 
 ## 4. Conclusiones
 
-Analisando los resultados como grupo podemos decir que nuestra investigacion, comunicación como equipo y metodología usadas han sido exitosas ya que se obtuvieron los resultados esperados queriendo decir que se cumplio el objetivo general planteado anteriormente. Además recalcar que la interaccion entre la IDE y OpenCV facilita en gran parte el poder desarrollar nuestro taller. 
+Analisando los resultados como grupo podemos decir que nuestra investigacion, comunicación como equipo y metodología usadas han sido exitosas ya que se obtuvieron los resultados esperados queriendo decir que se cumplio el objetivo general planteado anteriormente. Además recalcar que la interaccion entre la IDE y OpenCV facilita en gran parte el poder desarrollar nuestro taller, lo que da un avance en la materia de aprendizaje de nuevas tecnologías. 
 
 # Anexos
 
 ## Anexo A: Instalación librerías OpenCV
+                                     
 
 ## Anexo B: Instalación de IDE y configuración librerías OpenCV
 
