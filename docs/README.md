@@ -37,7 +37,7 @@ El fin que se desea llegar. (Comenzar con un verbo: "Construir un sistema...", "
 
 **Objetivos específicos**
 
-- [x] Creacion_del_github
+- [x] \(Optional)Creacion_del_github
 - [x] Instalacion de visual studio 2019 y opencv
 - [x] Codigo de identificacion facial
 
