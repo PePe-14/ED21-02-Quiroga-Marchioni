@@ -7,8 +7,8 @@
 
 **Alumnos:**
 
-* Alumno 01 (Rol)
-* Alumno 02 (Rol)
+* Thomas Quiroga Espinoza (Bitacora)
+* José Marchioni Clavería (Coordinador)
 
 ## Resumen 
 
