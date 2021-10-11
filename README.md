@@ -14,13 +14,13 @@
 * [Ver Bitácora](docs/BITACORA.md)
 
 ### Resumen
->
->
->
->
->
->
->
+>a
+>a
+>a
+>a
+>a
+>a
+>a
 * [Ver Resumen Tecnico](docs/RESUMEN.md)
 
 ![Resultado Final](/docs/Imagenes/Resultado.png)
