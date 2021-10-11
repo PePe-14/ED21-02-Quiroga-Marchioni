@@ -37,9 +37,9 @@ El fin que se desea llegar. (Comenzar con un verbo: "Construir un sistema...", "
 
 **Objetivos específicos**
 
-- [x] Creacion_del_github
-- [x] Instalacion de visual studio 2019 y opencv
-- [x] Codigo de identificacion facial
+- [x] :+1: Creacion_del_github
+- [x] :+1: Instalacion de visual studio 2019 y opencv
+- [x] :+1: Codigo de identificacion facial
 
 Los objetivos específicos son acciones específicas que son desarrolladas para lograr cumplir el objetivo general, por ejemplo:
 
