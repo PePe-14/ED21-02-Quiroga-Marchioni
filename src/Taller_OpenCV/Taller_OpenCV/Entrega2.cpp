@@ -8,104 +8,107 @@
 using namespace cv;
 using namespace std;
 
+void reconocer_Guardar(Mat img, CascadeClassifier face_cascade);
+
 class Persona {
-	int codigo;
-	int tiempo;
+	Mat* imagen;
+	int* tiempo;
 public:
 	Persona() {
-		this->codigo = 000000;
+	
 	}
-	Persona(int codigo, int tiempo) {
-		this->codigo = codigo;
-		this->tiempo = tiempo;
+	Persona(Mat* imagen) {
+		this->imagen = imagen;
 	}
-	int getCodigo() {
-		return codigo;
+	Mat* getImagen() {
+		return imagen;
 	}
-	int getTiempo() {
+
+	int* getTiempo() {
 		return tiempo;
 	}
-	void agregarTiempo(int newTiempo) {
-		tiempo += newTiempo;
+	void agregarTiempo(int* newTiempo) {
+		tiempo += *newTiempo;
 	}
 	~Persona() {
-		cout << "Persona eliminada" << endl;
+		delete tiempo;
 	}
 };
 
 class Nodo {
-	Persona persona;
+	Persona* persona;
 	Nodo* next;
 public:
-	Nodo(Persona persona, Nodo* next) {
+	Nodo(Persona* persona, Nodo* next) {
 		this->persona = persona;
 		this->next = next;
 	}
-	Persona getPersona() {
+	Persona* getPersona() {
 		return persona;
 	}
 	Nodo* getNext() {
 		return next;
 	}
+
+	~Nodo() {
+		delete persona;
+		next = NULL;
+	}
 };
 
 class ListaPersonas {
 	Nodo* first;
-	int size;
 public:
 	ListaPersonas() {
 		first = NULL;
-		size = 0;
 	}
-	void add(Persona persona) {
-		Nodo* existe = buscarPersona(persona.getCodigo());
+	void add(Persona* persona) {
+		Nodo* existe = buscarPersona(persona->getImagen());
 
 		if (existe == NULL) {//no existe
 			Nodo* newNodo = new Nodo(persona, first);
 			first = newNodo;
-			size++;
 		}
 		else {
-			(*existe).getPersona().agregarTiempo(persona.getTiempo());
+			int* newTiempo;
+			(*existe).getPersona()->agregarTiempo(newTiempo);
 		}
 	}
-	Nodo* buscarPersona(int codigo) {
+	Nodo* buscarPersona(Mat* imagen) {
 		Nodo* current = first;
 		while (current != NULL) {
-			if ((*current).getPersona().getCodigo() == codigo) {
+			if ((*current).getPersona()->getImagen() == imagen) {
 				return current;
 			}
 			current = (*current).getNext();
 		}
 		return NULL;
 	}
-	int getSize() {
-		return size;
-	}
-	string cincoPersonasMasTiempo() {
-		int tiempoPrimero = 0;
-		int primero;
-		int tiempoSegundo = 0;
-		int segundo;
-		int tiempoTercero = 0;
-		int tercero;
-		int tiempoCuarto = 0;
-		int cuarto;
-		int tiempoQuinto = 0;
-		int quinto;
+
+	void cincoPersonasMasTiempo() {
+		int* tiempoPrimero = 0;
+		Mat* primero;
+		int* tiempoSegundo = 0;
+		Mat* segundo;
+		int* tiempoTercero = 0;
+		Mat* tercero;
+		int* tiempoCuarto = 0;
+		Mat* cuarto;
+		int* tiempoQuinto = 0;
+		Mat* quinto;
 
 		Nodo* current = first;
 		while (current != NULL) {
-			int tiempoCurrent = (*current).getPersona().getTiempo();
-			int codigoCurrent = (*current).getPersona().getCodigo();//cambiar
+			int* tiempoCurrent = (*current).getPersona()->getTiempo();
+			Mat* codigoCurrent = (*current).getPersona()->getImagen();//cambiar
 			if (tiempoCurrent >= tiempoPrimero) {
-				int aux = tiempoPrimero;
-				int Caux = primero;
+				int* aux = tiempoPrimero;
+				Mat* Caux = primero;
 				tiempoPrimero = tiempoCurrent;
 				primero = codigoCurrent;
 
-				int aux2 = tiempoSegundo;
-				int Caux2 = segundo;
+				int* aux2 = tiempoSegundo;
+				Mat* Caux2 = segundo;
 				tiempoSegundo = aux2;
 				segundo = Caux2;
 
@@ -123,13 +126,13 @@ public:
 				quinto = Caux2;
 			}
 			else if (tiempoCurrent >= tiempoSegundo) {
-				int aux = tiempoSegundo;
-				int Caux = segundo;
+				int* aux = tiempoSegundo;
+				Mat* Caux = segundo;
 				tiempoSegundo = tiempoCurrent;
 				segundo = codigoCurrent;
 
-				int aux2 = tiempoTercero;
-				int Caux2 = tercero;
+				int* aux2 = tiempoTercero;
+				Mat* Caux2 = tercero;
 				tiempoTercero = aux;
 				tercero = Caux;
 
@@ -142,13 +145,13 @@ public:
 				quinto = Caux;
 			}
 			else if (tiempoCurrent >= tiempoTercero) {
-				int aux = tiempoTercero;
-				int Caux = tercero;
+				int* aux = tiempoTercero;
+				Mat* Caux = tercero;
 				tiempoTercero = tiempoCurrent;
 				tercero = codigoCurrent;
 
-				int aux2 = tiempoCuarto;
-				int Caux2 = cuarto;
+				int* aux2 = tiempoCuarto;
+				Mat* Caux2 = cuarto;
 				tiempoCuarto = aux;
 				cuarto = Caux;
 
@@ -156,8 +159,8 @@ public:
 				quinto = Caux2;
 			}
 			else if (tiempoCurrent >= tiempoCuarto) {
-				int aux = tiempoCuarto;
-				int Caux = cuarto;
+				int* aux = tiempoCuarto;
+				Mat* Caux = cuarto;
 				tiempoCuarto = tiempoCurrent;
 				cuarto = codigoCurrent;
 
@@ -171,32 +174,93 @@ public:
 			current = (*current).getNext();
 		}
 	}
+
+	~ListaPersonas() {
+		Nodo* current = this->first;
+		while (current->getNext() != NULL) {
+			Nodo* aux = current;
+			current = current->getNext();
+			delete aux;
+		}
+		delete current;
+		this->first = NULL;
+	}
 };
 
-int main()
+string window_name = "Window";
+int filenumber;
+string filename;
+
+void reconocer_Guardar(Mat img, CascadeClassifier face_cascade)
 {
+	vector<Rect> faces;
+	Mat img_gray;
+	Mat crop;
+	Mat res;
+	Mat gray;
 
-	VideoCapture cap(0);
-	Mat img;
+	cvtColor(img, img_gray, COLOR_BGR2GRAY);
+	equalizeHist(img_gray, img_gray);
 
-	while (true) {
+	face_cascade.detectMultiScale(img_gray, faces, 1.1, 2, 0 | CASCADE_SCALE_IMAGE, Size(30, 30));
 
-		cap.read(img);
+	Rect filas;
+	Rect col;
+	size_t j = 0;
 
-		CascadeClassifier faceCascade;
-		faceCascade.load("haarcascade_frontalface_default.xml");
+	for (size_t i = 0; i < faces.size(); i++)
+	{
+		col.x = faces[i].x;
+		col.y = faces[i].y;
+		col.width = (faces[i].width);
+		col.height = (faces[i].height);
 
-		vector<Rect> faces;
-		faceCascade.detectMultiScale(img, faces, 1.1, 10);
+		filas.x = faces[j].x;
+		filas.y = faces[j].y;
+		filas.width = (faces[j].width);
+		filas.height = (faces[j].height);
 
-		for (int i = 0; i < faces.size(); i++)
-		{
-			rectangle(img, faces[i].tl(), faces[i].br(), Scalar(0, 0, 255), 3);
-		}
+		crop = img(filas);
+		resize(crop, res, Size(128, 128), 0, 0, INTER_LINEAR);
+		cvtColor(crop, gray, COLOR_BGR2GRAY);
 
-		imshow("image", img);
-		waitKey(1);
-	
+		filename = "Resources/Imagenes";
+		stringstream ssfn;
+		ssfn << filename.c_str() << filenumber << ".jpg";
+		filename = ssfn.str();
+		imwrite(filename, res);
+		filenumber++;
+
+
+		Point pt1(faces[i].x, faces[i].y);
+		Point pt2((faces[i].x + faces[i].height), (faces[i].y + faces[i].width));
+		rectangle(img, pt1, pt2, Scalar(0, 0, 255), 2, 8, 0);
 	}
+
+	imshow("image", img);
+}
+
+void asociarRostroPersona() {}
+
+int main(void)
+{
+	ListaPersonas* lp = new ListaPersonas();
+
+	string path = "Resources/video.mp4";
+	VideoCapture capture(path);
+	Mat img;
+	CascadeClassifier face_cascade;
+	
+	face_cascade.load("haarcascade_frontalface_default.xml");
+
+	while (true)
+	{
+		capture.read(img);
+
+		reconocer_Guardar(img,face_cascade);
+
+		waitKey(10);
+	}
+	delete lp;
 	return 0;
 }
