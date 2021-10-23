@@ -48,7 +48,7 @@ Construir un programa que almacene en una Linked List los cinco rostros que apar
 
 ### 1.3 Solución propuesta
 
-Construir un código que permita reconocer rostros a partir de un archivo de extensión .XML que tiene en su implementación cumplir este objetivo y luego de esto mostrarle al usuario la imagen con los rostros señalados con el rectángulo rojo para probar que el algoritmo funciona.
+Construir una Linked List que almacene objetos tipo Persona que tendrán un atributo con el formato en que son reconocidos los rostros y una vez guardados comparar cuanto tiempo aparecen en el video y sumarle ese tiempo a otro atributo que medira el tiempo. Una vez terminado el video el programa tendra ordenado los rostros de manera descendente en relación a cuanto tiempo se mostraron en el video.
 
 ## 2. Materiales y métodos
 
