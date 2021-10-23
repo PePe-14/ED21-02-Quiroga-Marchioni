@@ -21,11 +21,9 @@ En los últimos años, tecnologías como el reconocimiento facial y de otras fig
 
 En esta entrega aplicaremos los conseptos aprendidos de lo que es una lista enlazada, y se veran implementados dentro del codigo, ya que necesitamos almacenar los rostros que fueron correctamente detectado por el algoritmo, estos se veran diferenciados con un rectangulo rojo, a su vez al finalizar se veran las 5 identidades del video que estuvieron mas tiempo detectadas.
 
-Este taller trata de aprender a usar programas junto con herramientas que facilitan el reconocimiento facial para lograr un objetivo que se define en los puntos posteriores
-que tiene que ver con el poder de observar personas por las cámaras con el fin de llevar un registro de sus movimientos dentro de algún lugar. Para llevar a cabo los objetivos que planteamos más adelante se tendrá que recurrir a foros e investigar en detalle como usar las herramientas que nos proporcionan para trabajar de una manera eficiente.
 ### 1.1 Descripción del problema
 
-Se presenta el desafío de construir un programa que reconozca los rostros que se muestran con mayor tiempo en el video y los almacene en una Lista.
+Se presenta el desafío de construir un programa que reconozca los rostros que se muestran con mayor tiempo en el video y los almacene en una Lista enlazada.
 
 ### 1.2 Objetivos 
 
