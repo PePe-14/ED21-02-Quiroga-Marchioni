@@ -78,17 +78,14 @@ La clase Personas fue creada con el objetivo de almacenar los rostros detectados
 
 
 >class Persona {
- 
 	int codigo;
 	int tiempo;
- 
  public:
- 
 	Persona(int codigo,int tiempo) {
 		this->codigo = codigo;
 		this->tiempo = tiempo;
 	}
- }>
+ }
 
 #### Detector de rostros
 
