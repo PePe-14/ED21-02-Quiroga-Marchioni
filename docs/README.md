@@ -55,10 +55,10 @@ Construir una Linked List que almacene objetos tipo Persona que tendrán un atri
 * IDE Visual Studio Community 2019 
 * Biblioteca OpenCV
 * Archivo haarcascade_frontalface_default.xml 
-* Imagen de rostros
+* Video con rostros
+* Clase Persona, Nodo_Persona y Linked_List.
 
-Configurando adecuandamente la IDE con OpenCV se logrará el primer paso para hacer uso de las librerias de esta y junto a la orientacion a objetos buscar y manipular los archivos necesarios para el analisis de las imágenes que se usarán. 
-Luego haremos uso del archivo .XML que tiene como objetivo reconocer las caras en las imágenes y asi podremos saber donde ubicar los rectángulos.
+Con el uso de la clase Mat de OpenCV podremos capturar la imagen del rostro con el archivo "haarcascade_frontalface_default.xml" y asignarlo como atributo (tipo Mat) a un objeto de tipo persona que se creara al momento de encontrar el rostro. Luego se agregará el objeto persona a la Linked List.
 
 ### 2.1 Instalación
 
