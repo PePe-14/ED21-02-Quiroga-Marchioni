@@ -23,7 +23,7 @@ Este taller trata de aprender a usar programas junto con herramientas que facili
 que tiene que ver con el poder de observar personas por las cámaras con el fin de llevar un registro de sus movimientos dentro de algún lugar. Para llevar a cabo los objetivos que planteamos más adelante se tendrá que recurrir a foros e investigar en detalle como usar las herramientas que nos proporcionan para trabajar de una manera eficiente.
 ### 1.1 Descripción del problema
 
-Se presenta el desafío de construir un programa que reconozca los rostros de personas en imagenes o videos con el fin de identificarlos con un rectángulo para que un guardia tenga la certeza del correcto funcionamiento del código.
+Se presenta el desafío de construir un programa que reconozca los rostros que se muestran con mayor tiempo en el video y los almacene en una Lista.
 
 ### 1.2 Objetivos 
 
