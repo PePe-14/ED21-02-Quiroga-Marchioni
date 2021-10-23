@@ -4,6 +4,6 @@
 
 | Fecha  | Objetivo  | Trabajo Realizado | Responsable | Tiempo Estimado | Tiempo Real |
 |--------|-----------|-------------------|-------------|-----------------|-------------|
-| 10/SEP | OBJ-01    | Creacion_del_github | PePe-14     | 1.5 horas    | 30 minutos |
-| 08/OCT | OBJ-02    | Instalacion de visual studio 2019 y opencv | ElAdminExe |  1 hora | 25 minutos |
-| 09/OCT | OBJ-03 | Codigo de identificacion facial | PePe-14 | 1 hora | 2 horas |
+| 10/SEP | OBJ-01    | Creación de lista enlazada | Creathor-14     | 30 minutos    | 1 hora |
+| 08/OCT | OBJ-02    | Lectura de rostros en video  | PePe-14 |  2 hora | 2 hora  |
+| 09/OCT | OBJ-03 | Reconocimiento facial | PePe-14 - Creathor-14  | 4+ hora | 2 horas |

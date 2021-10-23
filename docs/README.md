@@ -12,8 +12,8 @@
 
 ## Resumen 
 
->El Taller al que damos comienzo nos pide un sistema de vigilancia en base a reconocimiento de rostros. Para esta entrega en particular se solicita un programa que con ayuda de la biblioteca OpenCV podamos detectar los rostros en pantalla sea en una imagen, video o la cámara del ordenador, marcando esta en un rectángulo de color rojo, con el objetivo de que un guardia o administrador tengan acceso a los datos recopilados. 
->Para lograr este objetivo instalamos la IDE Visual Studio Community 2019 junto a OpenCV e hicimos uso de las librerías que nos permiten usar los archivos que reconocen caras y sus distintas herramientas; estas herramientas se tuvieron que aprender a usar con tutoriales y algunos foros en los que se nos indico que tuvimos que descargar un archivo de extensión .XML para la detección de los rostros. Una vez que obtuvimos todo lo necesario hicimos el código a partir de lo aprendido en los videos y sacamos imágenes de internet para hacer pruebas las cuales resultaron con éxito.
+>Para la segunda entrega del taller se nos pide un sistema de vigilancia en base a reconocimiento de rostros. Para esta entrega en particular se solicita crear una lista enlazada y un programa utilizando OpenCV, para detectar los rostros en pantalla, ya sea en una imagen, video o la cámara del ordenador, esta  maracara el rostro en un rectángulo de color rojo, con el objetivo de que un guardia o administrador tengan acceso a los datos recopilados. 
+>Para lograr este objetivo hicimos uso de la programacion orientada a objetos ya que necesitaremos almacenar los rostros de las personas y luego añadirlas a una LinkedList.Una vez que obtuvimos todo lo necesario debemos calcular el tiempo de cinco caras que aparezcan mas tiempo en el video.
 
 ## 1. Introducción
 
@@ -23,58 +23,54 @@ Este taller trata de aprender a usar programas junto con herramientas que facili
 que tiene que ver con el poder de observar personas por las cámaras con el fin de llevar un registro de sus movimientos dentro de algún lugar. Para llevar a cabo los objetivos que planteamos más adelante se tendrá que recurrir a foros e investigar en detalle como usar las herramientas que nos proporcionan para trabajar de una manera eficiente.
 ### 1.1 Descripción del problema
 
-Se presenta el desafío de construir un programa que reconozca los rostros de personas en imagenes o videos con el fin de identificarlos con un rectángulo para que un guardia tenga la certeza del correcto funcionamiento del código.
+Se presenta el desafío de construir un programa que reconozca los rostros que se muestran con mayor tiempo en el video y los almacene en una Lista.
 
 ### 1.2 Objetivos 
 
 **Objetivo General**
 
-Construir un programa que detecte en una imagen los rostros de las personas y los identifique en un rectángulo rojo.
+Construir un programa que almacene en una Linked List los cinco rostros que aparecen con mas tiempo en el video.
 
 **Objetivos específicos**
 
-- [x] :+1: Creación del repositorio en Github
-- [x] :+1: Instalación de Visual Studio 2019 y OpenCV
-- [x] :+1: Investigar como se reconocen rostros
-- [x] :+1: Código de identificacion facial
+- [x] :+1: Crear el código para reconocer rostros en videos.
+- [x] :+1: Crear las clases Persona,Nodo y Linked_List.
+- [x] :+1: Investigar como asociar un rostro capturado a un objeto persona.
+- [x] :+1: Almacenar los rostros de las personas en la Linked_List.
+- [x] :+1: Crear el código para que calcule el tiempo en pantalla de un rostro.
 
-Los objetivos específicos son acciones específicas que son desarrolladas para lograr cumplir el objetivo general, por ejemplo:
-
-1. La creación de un repositorio en Github para poder ver en tiempo real el avance del taller.
-2. Descargar e instalar los programas que nos proporcionan.
-3. Investigar la configuración de los programas entre si para su correcto funcionamiento.
-4. Plantearse la metodología a seguir durante el proyecto. 
-5. Averiguar como funciona el reconocimiento facial y las herramientas necesarias para hacer un uso correcto.
-6. Aplicar lo aprendido construyendo un código que reconozca los rostros.
+1. Un código esencial es el que detecta las matrices(rostros).
+2. La clase persona deberá contener un atributo unico para identificarlo y además un atributo de tiempo.
+3. Relacionar las clases con las librerias de OpenCV.
+4. Investigar el formato en que estan los rostros capturados por OpenCV para poder asociarlos a la clase persona. 
+5. Averiguar como calcular el tiempo que transcurre un rostro en el video.
+6. Establecer un orden descendente de los rostros por el tiempo transcurrido en el video.
 
 ### 1.3 Solución propuesta
 
-Construir un código que permita reconocer rostros a partir de un archivo de extensión .XML que tiene en su implementación cumplir este objetivo y luego de esto mostrarle al usuario la imagen con los rostros señalados con el rectángulo rojo para probar que el algoritmo funciona.
+Construir una Linked List que almacene objetos tipo Persona que tendrán un atributo con el formato en que son reconocidos los rostros y una vez guardados comparar cuanto tiempo aparecen en el video y sumarle ese tiempo a otro atributo que medira el tiempo. Una vez terminado el video el programa tendra ordenado los rostros de manera descendente en relación a cuanto tiempo se mostraron en el video.
 
 ## 2. Materiales y métodos
 
 * IDE Visual Studio Community 2019 
 * Biblioteca OpenCV
 * Archivo haarcascade_frontalface_default.xml 
-* Imagen de rostros
+* Video con rostros
+* Clase Persona, Nodo_Persona y Linked_List.
 
-Configurando adecuandamente la IDE con OpenCV se logrará el primer paso para hacer uso de las librerias de esta y junto a la orientacion a objetos buscar y manipular los archivos necesarios para el analisis de las imágenes que se usarán. 
-Luego haremos uso del archivo .XML que tiene como objetivo reconocer las caras en las imágenes y asi podremos saber donde ubicar los rectángulos.
+Con el uso de la clase Mat de OpenCV podremos capturar la imagen del rostro con el archivo "haarcascade_frontalface_default.xml" y asignarlo como atributo (tipo Mat) a un objeto de tipo persona que se creara al momento de encontrar el rostro. Luego se agregará el objeto persona a la Linked List.
 
-### 2.1 Instalación
-
-* IDE Visual Studio Community 2019: Es una IDE que tendrá todo el código del taller en el que se harán las pruebas de código hasta completar el objetivo.  
-* Biblioteca OpenCV: Líbrería libre de visión artificial que cuenta con la mayoria de las herramientas y líbrerias para una correcta compatibilidad con la IDE.
-* Archivo haarcascade_frontalface_default.xml: Archivo clasificador pre entrenado que es capaz de reconocer rostros y otras formas.
-
-### 2.2 Diseño 
+### 2.1 Diseño 
 
 La manera en que diseñamos el taller para la primera historia es simple porque no contiene muchas clases, así que procedere a nombrarlas y explicar su rol en el código
-* Clase Mat: Puede guardar matrices de varias dimesiones por lo que nosotros la usamos para guardar las imagenes.
+* Clase Mat: Puede guardar matrices de varias dimesiones por lo que nosotros la usamos para guardar las imagenes de las caras.
 * Clase CascadeClassifier: Crea objetos de tipo clasificadores de cascada que en resumen se necesitan muchas imagenes para entrenar a esta función para saber identificar objetos. Esto sera utilizado para cargar el archivo que reconoce los rostros.
 * Clase Rect:  Puede declarar un tipo de variable que permite dibujar zonas rectangulares. Claramente esta clase nos servirá para crear los rectángulos rojos en las imágenes.
+* Clase Persona: Se guardará a la persona con un codigo unico, el tiempo que aparecio en el video y con la imagen del rostro de tipo Mat.
+* Clase Nodo_Persona: Clase que contendrá como atributo una Persona y un puntero a el siguiente nodo.
+* Clase ListaPersonas: Linked_List que almacenara objetos tipo persona cuando el código capture un rostro, además la lista estará ordenada de manera descendente de acuerdo al timepo que hayan sido detectadas por el programa.
 
-### 2.3 Implementación
+### 2.2 Implementación
  
 
 #### Detector de rostros
@@ -107,17 +103,6 @@ Una vez terminada la ejecución del programa esta nos arroja la imagen que habia
 
 Analisando los resultados como grupo podemos decir que nuestra investigacion, comunicación como equipo y metodología usadas han sido exitosas ya que se obtuvieron los resultados esperados queriendo decir que se cumplio el objetivo general planteado anteriormente. Además recalcar que la interaccion entre la IDE y OpenCV facilita en gran parte el poder desarrollar nuestro taller, lo que da un avance en la materia de aprendizaje de nuevas tecnologías. 
 
-# Anexos
-
-## Anexo A: Instalación librerías OpenCV
-   >Se descargo he instalo OpenCV y la carpeta bin se agrego a las variables de entorno del sistema para que el sistema sepa donde ir a ejecutar los binarios referentes a      OpenCV.     
-
-## Anexo B: Instalación de IDE y configuración librerías OpenCV
-    >Se descargo he instalo Visual Studio Community 2019. Una vez creado el proyecto vamos a propiedades de este y configuramos las líbrerias de OpenCV en Visual Studio. 
-    >Las líbrerias son las siguientes:
-    * Del directorio de VC++ (opencv\build\include) y (opencv\build\x64\vc15\lib)
-    * En la seccíon general de c++ agregamos el include siguiente (opencv\build\include\opencv2)
-    * En dependencias adicionales de la opcion vinculador (opencv_world453d.lib)
 
 # Referecia
 
