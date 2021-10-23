@@ -63,15 +63,18 @@ Con el uso de la clase Mat de OpenCV podremos capturar la imagen del rostro con 
 ### 2.1 Instalación
 
 * IDE Visual Studio Community 2019: Es una IDE que tendrá todo el código del taller en el que se harán las pruebas de código hasta completar el objetivo.  
-* Biblioteca OpenCV: Líbrería libre de visión artificial que cuenta con la mayoria de las herramientas y líbrerias para una correcta compatibilidad con la IDE.
+* Biblioteca OpenCV: Líbrería libre de visión artificial que cuenta con la mayoria de las herramientas y líbrerias para una correcta compatibilidad con la IDE. La clase más relevante será Mat.
 * Archivo haarcascade_frontalface_default.xml: Archivo clasificador pre entrenado que es capaz de reconocer rostros y otras formas.
 
 ### 2.2 Diseño 
 
 La manera en que diseñamos el taller para la primera historia es simple porque no contiene muchas clases, así que procedere a nombrarlas y explicar su rol en el código
-* Clase Mat: Puede guardar matrices de varias dimesiones por lo que nosotros la usamos para guardar las imagenes.
+* Clase Mat: Puede guardar matrices de varias dimesiones por lo que nosotros la usamos para guardar las imagenes de las caras.
 * Clase CascadeClassifier: Crea objetos de tipo clasificadores de cascada que en resumen se necesitan muchas imagenes para entrenar a esta función para saber identificar objetos. Esto sera utilizado para cargar el archivo que reconoce los rostros.
 * Clase Rect:  Puede declarar un tipo de variable que permite dibujar zonas rectangulares. Claramente esta clase nos servirá para crear los rectángulos rojos en las imágenes.
+* Clase Persona: Se guardará a la persona con un codigo unico, el tiempo que aparecio en el video y con la imagen del rostro de tipo Mat.
+* Clase Nodo_Persona: Clase que contendrá como atributo una Persona y un puntero a el siguiente nodo.
+* Clase ListaPersonas: Linked_List que almacenara objetos tipo persona cuando el código capture un rostro, además la lista estará ordenada de manera descendente de acuerdo al timepo que hayan sido detectadas por el programa.
 
 ### 2.3 Implementación
  
