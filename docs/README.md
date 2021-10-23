@@ -74,18 +74,65 @@ La manera en que diseñamos el taller para la primera historia es simple porque 
  
 #### Almacenar rostros
 
-La clase Personas fue creada con el objetivo de almacenar los rostros detectados en le video y guardar los segundos y el rostro de la persona
+La clase Personas fue creada con el objetivo de almacenar los rostros detectados en le video y guardar los segundos y el rostro de la persona.
 
 	class Persona {
-	int codigo;
-	int tiempo;
+	  int codigo;
+	  int tiempo;
 	public:
 	  Persona(int codigo,int tiempo) {
 	    this->codigo = codigo;
  	    this->tiempo = tiempo;
 	  }
+	...
 	}
+#### Linked List
 
+Esta clase fue necesaria para almacenar mas de un solo rostro y se apoya de la clase nodos que almacena una persona.
+	
+	class Nodo{
+	  Persona persona;
+	  Nodo* next;
+	public:
+	  Nodo(Persona persona, Nodo* next) {
+		this->persona = persona;
+		this->next = next;
+	  }
+	...
+	}
+La clase que viene a continuacion esta encargada de almacenar los nodos 
+
+	class ListaPersonas {
+	  Nodo* first;
+	public:
+	  ListaPersonas() {
+		first = NULL;
+	  }
+Esta clase tiene la funcion de verificar que el rostro detectado no haya sido detectado con anterioridad, si es un rostro nuevo es ingresado a la linked list, en caso de que sea un rostro ya visto, se le agregaran los segundos que aparecio por pantalla a ese rostro.
+
+	void add(Persona persona) {
+		Nodo* existe = buscarPersona(persona.getCodigo());
+		
+		if (existe==NULL) {//no existe
+			Nodo* newNodo = new Nodo(persona, first);
+			first = newNodo;
+			size++;
+		}
+		else {
+			(*existe).getPersona().agregarTiempo(persona.getTiempo());
+		}
+	}
+	Nodo* buscarPersona(int codigo) {
+		Nodo* current = first;
+		while (current !=NULL) {
+			if ((*current).getPersona().getCodigo() == codigo) {
+				return current;
+			}
+			current = (*current).getNext();
+		}
+		return NULL;
+	}	
+	
 #### Detector de rostros
 
 El archivo detector de caras utilizado fue haarcascade_frontalface_default.xml. Para utilizarlo se debe crear un objeto que contenga este archivo, por lo que la clase que lo puede contener es CascadeCalssifier;
