@@ -19,6 +19,7 @@
 
 En los últimos años, tecnologías como el reconocimiento facial y de otras figuras a partir de las cámaras estan cada vez mas presente en la vida diaria, por lo que aprender a manipular y comprender estas nuevas tecnologías dará ventaja y nuevo conocimiento a los que se dispongan a estudiarlas. La mejor forma de aprender como reconocer rostros es con la investigacion, practica e implementacion de lo aprendido en codigo, como lo es el caso de este taller que hará perfeccionar las habilidades actuales y familiarizar conceptos que hasta ahora eran desconocidos.
 
+En esta entrega aplicaremos los conseptos aprendidos de lo que es una lista enlazada, y se veran implementados dentro del codigo, ya que necesitamos almacenar los rostros que fueron correctamente detectado por el algoritmo, estos se veran diferenciados con un rectangulo rojo, a su vez al finalizar se veran las 5 identidades del video que estubieron mas tiempo detectadas.
 Este taller trata de aprender a usar programas junto con herramientas que facilitan el reconocimiento facial para lograr un objetivo que se define en los puntos posteriores
 que tiene que ver con el poder de observar personas por las cámaras con el fin de llevar un registro de sus movimientos dentro de algún lugar. Para llevar a cabo los objetivos que planteamos más adelante se tendrá que recurrir a foros e investigar en detalle como usar las herramientas que nos proporcionan para trabajar de una manera eficiente.
 ### 1.1 Descripción del problema
