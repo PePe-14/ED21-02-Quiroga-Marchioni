@@ -76,18 +76,18 @@ La manera en que diseñamos el taller para la primera historia es simple porque 
 
 La clase Personas fue creada con el objetivo de almacenar los rostros detectados en le video y guardar los segundos y el rostro de la persona
 
+class Persona {
 
->class Persona {
->
->	int codigo;
->	int tiempo;
->	
->public:
->	Persona(int codigo,int tiempo) {
->		this->codigo = codigo;
->		this->tiempo = tiempo;
->	}
->}
+	int codigo;
+	int tiempo;
+	
+public:
+
+	Persona(int codigo,int tiempo) {
+	this->codigo = codigo;
+ this->tiempo = tiempo;
+	}
+}
 
 #### Detector de rostros
 
