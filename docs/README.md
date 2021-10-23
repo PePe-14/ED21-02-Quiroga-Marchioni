@@ -17,7 +17,7 @@
 
 ## 1. Introducción
 
-En los últimos años, tecnologías como el reconocimiento automático de rostros y de otras figuras a partir de las cámaras esta cada vez mas presente en la vida diaria por lo que aprender a manipular y comprender estas nuevas tecnologías dará ventaja y nuevo conocimiento a los que se dispongan a estudiarlas. Para dar estos pasos se necesita de alguna necesidad de la que se pueda construir un proyecto, como lo es el caso de este taller que hará mejorar las habilidades y familiarizar conceptos que hasta ahora eran desconocidos
+En los últimos años, tecnologías como el reconocimiento facial y de otras figuras a partir de las cámaras estan cada vez mas presente en la vida diaria, por lo que aprender a manipular y comprender estas nuevas tecnologías dará ventaja y nuevo conocimiento a los que se dispongan a estudiarlas. La mejor forma de aprender como reconocer rostros es con la investigacion, practica e implementacion de lo aprendido en codigo, como lo es el caso de este taller que hará perfeccionar las habilidades actuales y familiarizar conceptos que hasta ahora eran desconocidos.
 
 Este taller trata de aprender a usar programas junto con herramientas que facilitan el reconocimiento facial para lograr un objetivo que se define en los puntos posteriores
 que tiene que ver con el poder de observar personas por las cámaras con el fin de llevar un registro de sus movimientos dentro de algún lugar. Para llevar a cabo los objetivos que planteamos más adelante se tendrá que recurrir a foros e investigar en detalle como usar las herramientas que nos proporcionan para trabajar de una manera eficiente.
