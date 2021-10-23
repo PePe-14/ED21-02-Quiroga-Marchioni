@@ -29,23 +29,22 @@ Se presenta el desafío de construir un programa que reconozca los rostros de pe
 
 **Objetivo General**
 
-Construir un programa que detecte en una imagen los rostros de las personas y los identifique en un rectángulo rojo.
+Construir un programa que almacene en una Linked List los cinco rostros que aparecen con mas tiempo en el video.
 
 **Objetivos específicos**
 
-- [x] :+1: Creación del repositorio en Github
-- [x] :+1: Instalación de Visual Studio 2019 y OpenCV
-- [x] :+1: Investigar como se reconocen rostros
-- [x] :+1: Código de identificacion facial
+- [x] :+1: Crear el código para reconocer rostros en videos.
+- [x] :+1: Crear las clases Persona,Nodo y Linked_List.
+- [x] :+1: Investigar como asociar un rostro capturado a un objeto persona.
+- [x] :+1: Almacenar los rostros de las personas en la Linked_List.
+- [x] :+1: Crear el código para que calcule el tiempo en pantalla de un rostro.
 
-Los objetivos específicos son acciones específicas que son desarrolladas para lograr cumplir el objetivo general, por ejemplo:
-
-1. La creación de un repositorio en Github para poder ver en tiempo real el avance del taller.
-2. Descargar e instalar los programas que nos proporcionan.
-3. Investigar la configuración de los programas entre si para su correcto funcionamiento.
-4. Plantearse la metodología a seguir durante el proyecto. 
-5. Averiguar como funciona el reconocimiento facial y las herramientas necesarias para hacer un uso correcto.
-6. Aplicar lo aprendido construyendo un código que reconozca los rostros.
+1. Un código esencial es el que detecta las matrices(rostros).
+2. La clase persona deberá contener un atributo unico para identificarlo y además un atributo de tiempo.
+3. Relacionar las clases con las librerias de OpenCV.
+4. Investigar el formato en que estan los rostros capturados por OpenCV para poder asociarlos a la clase persona. 
+5. Averiguar como calcular el tiempo que transcurre un rostro en el video.
+6. Establecer un orden descendente de los rostros por el tiempo transcurrido en el video.
 
 ### 1.3 Solución propuesta
 
