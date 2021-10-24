@@ -82,7 +82,7 @@ public:
 		}
 		cout << "Se agrego: ";
 	}
-	/*Nodo* buscarPersona(Mat* imagen) {
+	/*Nodo* buscarPersona(Mat* imagen) {  //No se puedo implementar la busqueda de distintos rostros
 		Nodo* current = first;
 		while (current != NULL) {
 			if ((*current).getPersona()->getImagen() == imagen) {
@@ -259,7 +259,7 @@ void asociarRostroPersona(Mat img, ListaPersonas* lp,string filename) {
 	cout << filename << endl;
 }
 
-int main(void)
+int main(void)   //directorio de capturas de rostros:\ED21-02-Quiroga-Marchioni\src\Taller_OpenCV\Taller_OpenCV
 {
 	ListaPersonas* lp = new ListaPersonas();
 
