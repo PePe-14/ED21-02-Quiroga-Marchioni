@@ -86,7 +86,7 @@ La clase Personas fue creada con el objetivo de almacenar los rostros detectados
 
 Esta clase fue necesaria para almacenar mas de un solo rostro y se apoya de la clase nodos que almacena una persona y además tiene una funcion que calcula las cinco personas que se muestran con mas frecuencia.
 	
-void cincoPersonasMasTiempo() {
+	void cincoPersonasMasTiempo() {
 		int* tiempoPrimero = 0;
 		Mat primero;
 		int* tiempoSegundo = 0;
@@ -164,7 +164,7 @@ El código para detectar una cara en una imagen se muestra a continuación:
     Point pt2((faces[i].x + faces[i].height), (faces[i].y + faces[i].width));
     rectangle(img, pt1, pt2, Scalar(0, 0, 255), 2, 8, 0);
     
-   *Modificamoes la manera de hacer los rectangulos y ahora se uso la clase Point para fijar las medidas del rectangulo que se formará en la cara analizada y en el cuarto parametro ponemos el color que en este caso sería rojo como se pidío.*
+   *Modificamos la manera de hacer los rectángulos y ahora se uso la clase Point para fijar las medidas del rectangulo que se formará en la cara analizada y en el cuarto parametro ponemos el color que en este caso sería rojo como se pidío.*
 
 ## 3. Resultados obtenidos
 
