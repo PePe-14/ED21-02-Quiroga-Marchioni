@@ -8,19 +8,20 @@
 using namespace cv;
 using namespace std;
 
-void reconocer_Guardar(Mat img, CascadeClassifier face_cascade);
 
 class Persona {
-	Mat* imagen;
+	Mat imagen;
 	int* tiempo;
 public:
+
 	Persona() {
-	
+		this->imagen = NULL;
+		this->tiempo = 0;
 	}
-	Persona(Mat* imagen) {
+	Persona(Mat imagen) {
 		this->imagen = imagen;
 	}
-	Mat* getImagen() {
+	Mat getImagen() {
 		return imagen;
 	}
 
@@ -39,15 +40,19 @@ class Nodo {
 	Persona* persona;
 	Nodo* next;
 public:
-	Nodo(Persona* persona, Nodo* next) {
+	Nodo(Persona* persona) {
 		this->persona = persona;
-		this->next = next;
+		this->next = NULL;
 	}
 	Persona* getPersona() {
 		return persona;
 	}
 	Nodo* getNext() {
 		return next;
+	}
+
+	void setNext(Nodo* next) {
+		this->next = next;
 	}
 
 	~Nodo() {
@@ -63,18 +68,21 @@ public:
 		first = NULL;
 	}
 	void add(Persona* persona) {
-		Nodo* existe = buscarPersona(persona->getImagen());
+		Nodo* node = new Nodo(persona);
 
-		if (existe == NULL) {//no existe
-			Nodo* newNodo = new Nodo(persona, first);
-			first = newNodo;
+		if (first == NULL) {
+			first = node;
 		}
 		else {
-			int* newTiempo;
-			(*existe).getPersona()->agregarTiempo(newTiempo);
+			Nodo* current = first;
+			while (current->getNext() != NULL) {
+				current = current->getNext();
+			}
+			current->setNext(node);
 		}
+		cout << "Se agrego: ";
 	}
-	Nodo* buscarPersona(Mat* imagen) {
+	/*Nodo* buscarPersona(Mat* imagen) {
 		Nodo* current = first;
 		while (current != NULL) {
 			if ((*current).getPersona()->getImagen() == imagen) {
@@ -83,32 +91,32 @@ public:
 			current = (*current).getNext();
 		}
 		return NULL;
-	}
+	}*/
 
 	void cincoPersonasMasTiempo() {
 		int* tiempoPrimero = 0;
-		Mat* primero;
+		Mat primero;
 		int* tiempoSegundo = 0;
-		Mat* segundo;
+		Mat segundo;
 		int* tiempoTercero = 0;
-		Mat* tercero;
+		Mat tercero;
 		int* tiempoCuarto = 0;
-		Mat* cuarto;
+		Mat cuarto;
 		int* tiempoQuinto = 0;
-		Mat* quinto;
+		Mat quinto;
 
 		Nodo* current = first;
 		while (current != NULL) {
 			int* tiempoCurrent = (*current).getPersona()->getTiempo();
-			Mat* codigoCurrent = (*current).getPersona()->getImagen();//cambiar
+			Mat codigoCurrent = (*current).getPersona()->getImagen();//cambiar
 			if (tiempoCurrent >= tiempoPrimero) {
 				int* aux = tiempoPrimero;
-				Mat* Caux = primero;
+				Mat Caux = primero;
 				tiempoPrimero = tiempoCurrent;
 				primero = codigoCurrent;
 
 				int* aux2 = tiempoSegundo;
-				Mat* Caux2 = segundo;
+				Mat Caux2 = segundo;
 				tiempoSegundo = aux2;
 				segundo = Caux2;
 
@@ -127,12 +135,12 @@ public:
 			}
 			else if (tiempoCurrent >= tiempoSegundo) {
 				int* aux = tiempoSegundo;
-				Mat* Caux = segundo;
+				Mat Caux = segundo;
 				tiempoSegundo = tiempoCurrent;
 				segundo = codigoCurrent;
 
 				int* aux2 = tiempoTercero;
-				Mat* Caux2 = tercero;
+				Mat Caux2 = tercero;
 				tiempoTercero = aux;
 				tercero = Caux;
 
@@ -146,12 +154,12 @@ public:
 			}
 			else if (tiempoCurrent >= tiempoTercero) {
 				int* aux = tiempoTercero;
-				Mat* Caux = tercero;
+				Mat Caux = tercero;
 				tiempoTercero = tiempoCurrent;
 				tercero = codigoCurrent;
 
 				int* aux2 = tiempoCuarto;
-				Mat* Caux2 = cuarto;
+				Mat Caux2 = cuarto;
 				tiempoCuarto = aux;
 				cuarto = Caux;
 
@@ -160,7 +168,7 @@ public:
 			}
 			else if (tiempoCurrent >= tiempoCuarto) {
 				int* aux = tiempoCuarto;
-				Mat* Caux = cuarto;
+				Mat Caux = cuarto;
 				tiempoCuarto = tiempoCurrent;
 				cuarto = codigoCurrent;
 
@@ -191,7 +199,9 @@ string window_name = "Window";
 int filenumber;
 string filename;
 
-void reconocer_Guardar(Mat img, CascadeClassifier face_cascade)
+void asociarRostroPersona(Mat img, ListaPersonas* lp,string filename);
+
+void reconocer_Guardar(Mat img, CascadeClassifier face_cascade, ListaPersonas* lp)
 {
 	vector<Rect> faces;
 	Mat img_gray;
@@ -224,7 +234,7 @@ void reconocer_Guardar(Mat img, CascadeClassifier face_cascade)
 		resize(crop, res, Size(128, 128), 0, 0, INTER_LINEAR);
 		cvtColor(crop, gray, COLOR_BGR2GRAY);
 
-		filename = "Resources/Imagenes";
+		filename = "Capturas";
 		stringstream ssfn;
 		ssfn << filename.c_str() << filenumber << ".jpg";
 		filename = ssfn.str();
@@ -235,12 +245,19 @@ void reconocer_Guardar(Mat img, CascadeClassifier face_cascade)
 		Point pt1(faces[i].x, faces[i].y);
 		Point pt2((faces[i].x + faces[i].height), (faces[i].y + faces[i].width));
 		rectangle(img, pt1, pt2, Scalar(0, 0, 255), 2, 8, 0);
+
+		asociarRostroPersona(img,lp,filename);
 	}
 
 	imshow("image", img);
 }
 
-void asociarRostroPersona() {}
+void asociarRostroPersona(Mat img, ListaPersonas* lp,string filename) {
+	
+	Persona* p = new Persona(img);
+	lp->add(p);
+	cout << filename << endl;
+}
 
 int main(void)
 {
@@ -257,7 +274,7 @@ int main(void)
 	{
 		capture.read(img);
 
-		reconocer_Guardar(img,face_cascade);
+		reconocer_Guardar(img,face_cascade,lp);
 
 		waitKey(10);
 	}
