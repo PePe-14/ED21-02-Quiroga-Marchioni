@@ -172,7 +172,7 @@ Una vez terminada la ejecución del programa esta nos arroja el video donde señ
 
 ## 4. Conclusiones
 
-Analisando los resultados como grupo podemos decir que nuestra investigacion, comunicación como equipo y metodología usadas han sido exitosas ya que se obtuvieron los resultados esperados queriendo decir que se cumplio el objetivo general planteado anteriormente. Además recalcar que la interaccion entre la IDE y OpenCV facilita en gran parte el poder desarrollar nuestro taller, lo que da un avance en la materia de aprendizaje de nuevas tecnologías. 
+Analisando los resultados de nuestra investigacion e implementacion en el codigo, podemos llegar a la conclucion de que las estructuras de datos nos ayudan a almacenar de una forma comoda diversos datos que en estos casos fueron los rostros detectados por nuerstro algoritmo utilizando opencv, esta vez no logramos todos los objetivos, pero si entendimos de mejor manera el funcionamiento de los conocimientos adquiridos. Además recalcar que la interaccion entre la IDE y OpenCV facilita en gran parte el poder desarrollar nuestro taller, lo que da un avance en la materia de aprendizaje de nuevas tecnologías. 
 
 # Anexos
 
