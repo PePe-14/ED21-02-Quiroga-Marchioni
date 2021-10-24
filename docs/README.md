@@ -80,24 +80,23 @@ La clase Personas fue creada con el objetivo de almacenar los rostros detectados
 
 Esta clase fue necesaria para almacenar mas de un solo rostro y se apoya de la clase nodos que almacena una persona y además tiene una funcion que calcula las cinco personas que se muestran con mas frecuencia.
 	
-	```
-	void cincoPersonasMasTiempo() {
-		int* tiempoPrimero = 0;
-		Mat primero;
-		int* tiempoSegundo = 0;
-		Mat segundo;
-		int* tiempoTercero = 0;
-		Mat tercero;
-		int* tiempoCuarto = 0;
-		Mat cuarto;
-		int* tiempoQuinto = 0;
-		Mat quinto;
-
-		Nodo* current = first;
-		while (current != NULL) {
-			int* tiempoCurrent = (*current).getPersona()->getTiempo();
-			Mat codigoCurrent = (*current).getPersona()->getImagen();
-			```
+```
+void cincoPersonasMasTiempo() {
+int* tiempoPrimero = 0;
+Mat primero;
+int* tiempoSegundo = 0;
+Mat segundo;
+int* tiempoTercero = 0;
+Mat tercero;
+int* tiempoCuarto = 0;
+Mat cuarto;
+int* tiempoQuinto = 0;
+Mat quinto;
+Nodo* current = first;
+while (current != NULL) {
+int* tiempoCurrent = (*current).getPersona()->getTiempo();
+Mat codigoCurrent = (*current).getPersona()->getImagen();
+```
 La clase que viene a continuacion esta encargada de almacenar los nodos 
 
 	class ListaPersonas {
