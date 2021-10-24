@@ -60,7 +60,13 @@ Construir una Linked List que almacene objetos tipo Persona que tendrán un atri
 
 Con el uso de la clase Mat de OpenCV podremos capturar la imagen del rostro con el archivo "haarcascade_frontalface_default.xml" y asignarlo como atributo (tipo Mat) a un objeto de tipo persona que se creara al momento de encontrar el rostro. Luego se agregará el objeto persona a la Linked List.
 
-### 2.1 Diseño 
+### 2.1 Instalación
+
+* IDE Visual Studio Community 2019: Es una IDE que tendrá todo el código del taller en el que se harán las pruebas de código hasta completar el objetivo.  
+* Biblioteca OpenCV: Líbrería libre de visión artificial que cuenta con la mayoria de las herramientas y líbrerias para una correcta compatibilidad con la IDE.
+* Archivo haarcascade_frontalface_default.xml: Archivo clasificador pre entrenado que es capaz de reconocer rostros y otras formas.
+
+### 2.2 Diseño 
 
 La manera en que diseñamos el taller para la primera historia es simple porque no contiene muchas clases, así que procedere a nombrarlas y explicar su rol en el código
 * Clase Mat: Puede guardar matrices de varias dimesiones por lo que nosotros la usamos para guardar las imagenes de las caras.
@@ -70,7 +76,7 @@ La manera en que diseñamos el taller para la primera historia es simple porque 
 * Clase Nodo_Persona: Clase que contendrá como atributo una Persona y un puntero a el siguiente nodo.
 * Clase ListaPersonas: Linked_List que almacenara objetos tipo persona cuando el código capture un rostro, además la lista estará ordenada de manera descendente de acuerdo al timepo que hayan sido detectadas por el programa.
 
-### 2.2 Implementación
+### 2.3 Implementación
  
 #### Almacenar rostros
 
@@ -80,55 +86,64 @@ La clase Personas fue creada con el objetivo de almacenar los rostros detectados
 
 Esta clase fue necesaria para almacenar mas de un solo rostro y se apoya de la clase nodos que almacena una persona y además tiene una funcion que calcula las cinco personas que se muestran con mas frecuencia.
 	
-```
 void cincoPersonasMasTiempo() {
-int* tiempoPrimero = 0;
-Mat primero;
-int* tiempoSegundo = 0;
-Mat segundo;
-int* tiempoTercero = 0;
-Mat tercero;
-int* tiempoCuarto = 0;
-Mat cuarto;
-int* tiempoQuinto = 0;
-Mat quinto;
-Nodo* current = first;
-while (current != NULL) {
-int* tiempoCurrent = (*current).getPersona()->getTiempo();
-Mat codigoCurrent = (*current).getPersona()->getImagen();
-```
-La clase que viene a continuacion esta encargada de almacenar los nodos 
+		int* tiempoPrimero = 0;
+		Mat primero;
+		int* tiempoSegundo = 0;
+		Mat segundo;
+		int* tiempoTercero = 0;
+		Mat tercero;
+		int* tiempoCuarto = 0;
+		Mat cuarto;
+		int* tiempoQuinto = 0;
+		Mat quinto;
 
-	class ListaPersonas {
-	  Nodo* first;
-	public:
-	  ListaPersonas() {
-		first = NULL;
-	  }
-Esta clase tiene la funcion de verificar que el rostro detectado no haya sido detectado con anterioridad, si es un rostro nuevo es ingresado a la linked list, en caso de que sea un rostro ya visto, se le agregaran los segundos que aparecio por pantalla a ese rostro.
+		Nodo* current = first;
+		while (current != NULL) {
+			int* tiempoCurrent = (*current).getPersona()->getTiempo();
+			Mat codigoCurrent = (*current).getPersona()->getImagen();
+			...(continua)
 
-	void add(Persona persona) {
-		Nodo* existe = buscarPersona(persona.getCodigo());
-		
-		if (existe==NULL) {//no existe
-			Nodo* newNodo = new Nodo(persona, first);
-			first = newNodo;
-			size++;
+*Este codigo no se alcanzo a utilizar ya que no se pudo hacer una distinción de los rostros que se capturaban, por lo que todos los tiempos en la pantalla eran iguales. Practicamente lo que hacia era comparar los tiempos y luego asignar su correspondiente imagen tipo Mat.* 
+
+#### Capturar rostro
+El código a continuación captura las coordenadas donde se encontro el rostro y descompone la imagen en una matriz para poder asignarle el rectangulo rojo y despues agregar la captura a un archivo. 
+
+	for (size_t i = 0; i < faces.size(); i++)
+	{
+		col.x = faces[i].x;
+		col.y = faces[i].y;
+		col.width = (faces[i].width);
+		col.height = (faces[i].height);
+
+		filas.x = faces[j].x;
+		filas.y = faces[j].y;
+		filas.width = (faces[j].width);
+		filas.height = (faces[j].height);
+
+		crop = img(filas);
+		resize(crop, res, Size(128, 128), 0, 0, INTER_LINEAR);
+		cvtColor(crop, gray, COLOR_BGR2GRAY);
+
+#### Ingresa una persona a la Linked List
+Esta clase tiene la funcion de verificar que el rostro detectado no haya sido detectado con anterioridad, si es un rostro nuevo es ingresado a la linked list, pero ya que el programa no distingue los rostros, todos son considerados nuevos.
+
+	void add(Persona* persona) {
+		Nodo* node = new Nodo(persona);
+
+		if (first == NULL) {
+			first = node;
 		}
 		else {
-			(*existe).getPersona().agregarTiempo(persona.getTiempo());
-		}
-	}
-	Nodo* buscarPersona(int codigo) {
-		Nodo* current = first;
-		while (current !=NULL) {
-			if ((*current).getPersona().getCodigo() == codigo) {
-				return current;
+			Nodo* current = first;
+			while (current->getNext() != NULL) {
+				current = current->getNext();
 			}
-			current = (*current).getNext();
+			current->setNext(node);
 		}
-		return NULL;
-	}	
+		cout << "Se agrego: ";
+	}
+	
 	
 #### Detector de rostros
 
@@ -141,27 +156,38 @@ El código para detectar una cara en una imagen se muestra a continuación:
     vector<Rect> faces;
     faceCascade.detectMultiScale(img,faces,1.1,10);
 
-En estas cuatro líneas se observa que el archivo .XML se carga a su correspondiente objeto y luego se crea una lista de rectangulos en la que con la ultima linea de codigo todas las caras que fueron detectadas tendran asignado un objeto tipo rectangulo.
+*En estas cuatro líneas se observa que el archivo .XML se carga a su correspondiente objeto y luego se crea una lista de rectangulos en la que con la ultima linea de codigo todas las caras que fueron detectadas tendran asignado un objeto tipo rectangulo.*
 
 #### Creacion de los rectangulos
     
-    for (int i = 0; i < faces.size(); i++)
-    {
-        rectangle(img, faces[i].tl(), faces[i].br(), Scalar(0, 0,255),3);
-    }
-   El primero parametro de la funcion rectangulo es la image analisada, luego los 2 parametros siguientes son las escalas del rectangulo y por ultimo el color que en este caso sería rojo como se pidío.
-
+    Point pt1(faces[i].x, faces[i].y);
+    Point pt2((faces[i].x + faces[i].height), (faces[i].y + faces[i].width));
+    rectangle(img, pt1, pt2, Scalar(0, 0, 255), 2, 8, 0);
+    
+   *Modificamoes la manera de hacer los rectangulos y ahora se uso la clase Point para fijar las medidas del rectangulo que se formará en la cara analizada y en el cuarto parametro ponemos el color que en este caso sería rojo como se pidío.*
 
 ## 3. Resultados obtenidos
 
-Una vez terminada la ejecución del programa esta nos arroja la imagen que habiamos preseleccionado cuyo contenido eran cinco personas pero con la diferencia de que ahora estarían identificadas por el código, mostrando asi cinco rectángulos rojos en cada rostro.
+Una vez terminada la ejecución del programa esta nos arroja el video donde señala a la mayoria de las caras que alli aparecen y además por consola se escribe el nombre de la imagen que acaba de ser capturada y con un mensaje de que un objeto persona que se ha creado a partir de esta captura ha sido ingresada a la Linked List de Personas. Las imágenes son capturadas en cada frame y no supimos como cambiar esta configuración.
 
 ## 4. Conclusiones
 
 Analisando los resultados como grupo podemos decir que nuestra investigacion, comunicación como equipo y metodología usadas han sido exitosas ya que se obtuvieron los resultados esperados queriendo decir que se cumplio el objetivo general planteado anteriormente. Además recalcar que la interaccion entre la IDE y OpenCV facilita en gran parte el poder desarrollar nuestro taller, lo que da un avance en la materia de aprendizaje de nuevas tecnologías. 
 
+# Anexos
+
+## Anexo A: Instalación librerías OpenCV
+   >Se descargo he instalo OpenCV y la carpeta bin se agrego a las variables de entorno del sistema para que el sistema sepa donde ir a ejecutar los binarios referentes a      OpenCV.     
+
+## Anexo B: Instalación de IDE y configuración librerías OpenCV
+    >Se descargo he instalo Visual Studio Community 2019. Una vez creado el proyecto vamos a propiedades de este y configuramos las líbrerias de OpenCV en Visual Studio. 
+    >Las líbrerias son las siguientes:
+    * Del directorio de VC++ (opencv\build\include) y (opencv\build\x64\vc15\lib)
+    * En la seccíon general de c++ agregamos el include siguiente (opencv\build\include\opencv2)
+    * En dependencias adicionales de la opcion vinculador (opencv_world453d.lib)
 
 # Referecia
 
 1. Solano, G. (2020, 21 enero). Detección de Rostros con Haar Cascades. https://omes-va.com/deteccion-de-rostros-con-haar-cascades-python-opencv/.
 2. Murtaza’s Workshop - Robotics and AI. (2020, 13 diciembre). LEARN OPENCV C++ in 4 HOURS [Vídeo]. Youtube. https://youtu.be/2FYm3GOonhk.
+3. L.Team. (2021, 19 octubre). Image Resizing with OpenCV | LearnOpenCV #. LearnOpenCV – OpenCV, PyTorch, Keras, Tensorflow Examples and Tutorials. Recuperado 21 de octubre de 2021, de https://learnopencv.com/image-resizing-with-opencv/
