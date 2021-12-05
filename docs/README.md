@@ -12,24 +12,23 @@
 
 ## Resumen 
 
->Para la segunda entrega del taller se nos pide un sistema de vigilancia en base a reconocimiento de rostros. Para esta entrega en particular se solicita crear una lista enlazada y un programa utilizando OpenCV, para detectar los rostros en pantalla, ya sea en una imagen, video o la cámara del ordenador, esta  maracara el rostro en un rectángulo de color rojo, con el objetivo de que un guardia o administrador tengan acceso a los datos recopilados. 
->Para lograr este objetivo hicimos uso de la programacion orientada a objetos ya que necesitaremos almacenar los rostros de las personas y luego añadirlas a una LinkedList.Una vez que obtuvimos todo lo necesario debemos calcular el tiempo de cinco caras que aparezcan mas tiempo en el video.
-
+>Para la Tercera entrega del taller se nos pide un sistema de vigilancia en base a reconocimiento de rostros. Para esta entrega en particular se solicita establecer la hora de inicio y termino de la sesión por dia para poder contar las personas utilizando OpenCV, para detectar los rostros en pantalla, ya sea en una imagen, video o la cámara del ordenador, con el objetivo de que un guardia o administrador tengan acceso a los datos recopilados y almacenados en estructuras de datos. 
+>Para lograr este objetivo hicimos uso de la programacion orientada a objetos ya que necesitaremos almacenar los rostros de las personas y luego ingresarlas en un Árbol Binario, ademas debemos almacenar el video o secuencia de imagenes para poder contar con él en caso de algun incidente. Una vez que obtuvimos todo lo necesario debemos contar los rostros en el video en un tiempo acotado.
 ## 1. Introducción
 
 En los últimos años, tecnologías como el reconocimiento facial y de otras figuras a partir de las cámaras estan cada vez mas presente en la vida diaria, por lo que aprender a manipular y comprender estas nuevas tecnologías dará ventaja y nuevo conocimiento a los que se dispongan a estudiarlas. La mejor forma de aprender como reconocer rostros es con la investigacion, practica e implementacion de lo aprendido en codigo, como lo es el caso de este taller que hará perfeccionar las habilidades actuales y familiarizar conceptos que hasta ahora eran desconocidos.
 
-En esta entrega aplicaremos los conseptos aprendidos de lo que es una lista enlazada, y se veran implementados dentro del codigo, ya que necesitamos almacenar los rostros que fueron correctamente detectado por el algoritmo, estos se veran diferenciados con un rectangulo rojo, a su vez al finalizar se veran las 5 identidades del video que estuvieron mas tiempo detectadas.
+En esta entrega aplicaremos los conceptos aprendidos sobre como implementar un Arbol binario, y a su vez como aplicar sus métodos en la captura y almacenamiento de rostros, ya que necesitamos almacenar los rostros que fueron correctamente detectado por el algoritmo, estos se veran diferenciados con un rectangulo rojo. Al finalizar podremos saber las identidades que pudieron ser identificadas en un periodo corto de tiempo.
 
 ### 1.1 Descripción del problema
 
-Se presenta el desafío de construir un programa que reconozca los rostros que se muestran con mayor tiempo en el video y los almacene en una Lista enlazada.
+Se presenta el desafío de construir un programa que reconozca los rostros que se muestran con mayor tiempo en el video o una secuencia de imagenes y los almacene en una estructura de Arbol Binario y ademas almacenar este video o secuencia de imágenes.
 
 ### 1.2 Objetivos 
 
 **Objetivo General**
 
-Construir un programa que almacene en una Linked List los cinco rostros que aparecen con mas tiempo en el video.
+Construir un programa que almacene en un Árbol binario los rostros que aparecen en el video en un tiempo acotado y que guarde el video.
 
 **Objetivos específicos**
 
