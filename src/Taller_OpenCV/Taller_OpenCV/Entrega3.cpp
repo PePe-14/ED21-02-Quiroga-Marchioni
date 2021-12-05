@@ -3,8 +3,9 @@
 #include "opencv2/highgui.hpp"
 #include "opencv2/objdetect.hpp"
 #include <iostream>
+#include <string>
 
-
+using namespace cv;
 using namespace std;
 
 #ifndef UCN_TALLER_EDATOS_2021_1_BINARYSEARCHTREENODE_H
@@ -101,167 +102,155 @@ private:
 
 #endif //IMAGE_CODING_HPP
 
-#ifndef UCN_TALLER_EDATOS_2021_1_BINARYSEARCHTREE_H
-#define UCN_TALLER_EDATOS_2021_1_BINARYSEARCHTREE_H
 
 class BinarySearchTree {
 
-private:
-    const int DIFFERENT = 1700;
-    const int SIMILAR = 1300;
+    private:
+        const int DIFFERENT = 1700;
+        const int SIMILAR = 1300;
+        /**
+         * Contador para asignar identificadores a las caras
+        */
+        int counter;
+        BinarySearchTreeNode* root;
+
+    public:
+        BinarySearchTree() {
+            counter = 0;
+            root = nullptr;
+        }
+
     /**
-     * Contador para asignar identificadores a las caras
+     * Inserta la imagen en el arbol le asigna un identificador.
+     *
+     * @param image (Mat) imagen de tamaño 25x25 en gris
      */
-    int counter;
-    struct BinarySearchTreeNode* root;
-    BinarySearchTreeNode* insert(BinarySearchTreeNode* node, Mat);
-    double euclideanDistance(Mat, Mat);
-
-public:
-    BinarySearchTree() {
-        counter = 0;
-        root = nullptr;
+    void insert(Mat image) {
+        root = insert(root, image);
     }
 
-    void insert(Mat);
+    double euclideanDistance(Mat img1, Mat img2) {
+        return norm(img1, img2, NORM_L2);
+    }
 
-    //TODO: Falta hacer el destructor para eliminar cualquier el arbol complementamente
-};
+    BinarySearchTreeNode* insert(BinarySearchTreeNode* node, Mat image) {
+        // Tolerancia para considerar una imagen igual
+        //Si el árbol no tiene hijos
+        if (node == nullptr) {
+            node = new BinarySearchTreeNode();
+            node->key = ++counter;
+            node->image = image;
+            node->left = nullptr;
+            node->right = nullptr;
 
-
-#endif //UCN_TALLER_EDATOS_2021_1_BINARYSEARCHTREE_H
-
-
-void BinarySearchTree::insert(int n) {
-    root = insert(root, n);
-}
-
-BinarySearchTreeNode* BinarySearchTree::insert(BinarySearchTreeNode* node, int n) {
-    //Si el árbol no tiene hijos
-    if (node == nullptr) {
-        node = new BinarySearchTreeNode();
-        node->key = n;
-        node->left = nullptr;
-        node->right = nullptr;
-
+            cout << "ID: " << node->key << endl;
+            return node;
+        }
+        else if (SIMILAR < euclideanDistance(node->image, image)
+            && DIFFERENT > euclideanDistance(node->image, image)) {
+            node->left = insert(node->left, image);
+        }
+        else if (DIFFERENT <= euclideanDistance(node->image, image)) {
+            node->right = insert(node->right, image);
+        }
+        else { //La cara es igual (menor a la distancia exigida para similar)
+            cout << "Distancia euclidea (Igual): " << euclideanDistance(node->image, image) << endl;
+            node->image = image; //Cambio la imagen por la nueva
+            cout << "Cara igual" << endl;
+        }
+        cout << "Distancia euclidea: " << euclideanDistance(node->image, image) << endl;
         return node;
     }
-    else if (n < node->key) {
-        node->left = insert(node->left, n);
-    }
-    else if (n > node->key) {
-        node->right = insert(node->right, n);
-    }
 
-    return node;
+    void Destroy(BinarySearchTreeNode* node){
 
-}
-
-void BinarySearchTree::preOrder(void) { // Public
-    preOrder(root);
-}
-
-void BinarySearchTree::preOrder(BinarySearchTreeNode* node) {
-    if (node == nullptr) return;
-    cout << node->key << "\t";
-    preOrder(node->left);
-    preOrder(node->right);
-}
-
-void BinarySearchTree::remove(int n) { // Public
-    remove(root, n);
-}
-
-BinarySearchTreeNode* BinarySearchTree::remove(BinarySearchTreeNode* node, int n) {
-    // El nodo no se encuentra en el árbol
-    if (node == nullptr) {
-        return node;
-    }
-    else if (n < node->key) { // Busco la clave por la izquierda
-        node->left = remove(node->left, n);
-    }
-    else if (n > node->key) { // Busco la clave por la derecha
-        node->right = remove(node->right, n);
-    }
-    else { //Encontré la clave y la borro
-       //Si es nodo hoja
-        if (node->left == nullptr && node->right == nullptr) {
+        if (node != NULL){
+            Destroy(node->left);
+            Destroy(node->right);
             delete node;
-            node = nullptr;
-        }
-        else if (node->left == nullptr) { //El nodo a eliminar tiene solo un hijo derecho
-            BinarySearchTreeNode* aux = node;
-            node = node->right;
-            delete aux;
-        }
-        else if (node->right == nullptr) { //El nodo a eliminar tiene solo un hijo izquierdo
-            BinarySearchTreeNode* aux = node;
-            node = node->left;
-            delete aux;
-        }
-        else {
-            BinarySearchTreeNode* aux = findMinimum(node->right);
-            node->key = aux->key;
-            node->right = remove(node->right, aux->key);
+            node = NULL; 
         }
     }
-    return node;
-}
 
-
-BinarySearchTreeNode* BinarySearchTree::findMinimum(BinarySearchTreeNode* node) {
-    while (node->left != nullptr) {
-        node = node->left;
+    ~BinarySearchTree() {
+        Destroy(root);
     }
-    return node;
-}
-
-
-using namespace std;
-using namespace cv;
+};
 
 int main()
 {
-
     cout << "Para salir del programa presione ESC o q(uit)." << endl;
-    Mat image;
-    image = imread("data/caras.jpg", IMREAD_COLOR);
 
+    vector<string> imagesStr;
+    //TODO: Cargar todos los archivos del directorio automáticamente
+    imagesStr.push_back("data/image-007.jpeg");
+    imagesStr.push_back("data/image-008.jpeg");
+    imagesStr.push_back("data/image-024.jpeg");
+    imagesStr.push_back("data/image-025.jpeg");
+    imagesStr.push_back("data/image-026.jpeg");
+    imagesStr.push_back("data/image-046.jpeg");
+    imagesStr.push_back("data/image-047.jpeg");
+
+    cout << "imagesStr = { ";
+    for (string n : imagesStr) {
+        cout << n << ", ";
+    }
+    cout << "};" << endl;
+
+    // Leemos todas las caras de los archivos de imágenes y las insertamos en el árbol
+    BinarySearchTree abb;
     FaceDetector fdetector;
     ImageCoding icoding;
+    Mat image;
+    Scalar color(0, 0, 255);
 
-    // Detecto las caras
-    auto facesMarkers = fdetector.detectFaceRectangles(image);
+    cout << "COLOR";
+    for (string im : imagesStr) {
+        cout << im << endl;
+        image = imread(im, IMREAD_COLOR);
+        auto facesMarkers = fdetector.detectFaceRectangles(image);
 
-    // Codifico las caras detectadas
-    icoding.setImage(image);
-    auto faceCodingGray = icoding.codeGray(facesMarkers, true, Size(25, 25));
+        // Codifico las caras detectadas
+        icoding.setImage(image);
+        auto faceCodingGray = icoding.codeGray(facesMarkers, true, Size(25, 25));
+        // Muestro las caras codificadas
+        Mat colorImage;
+        Mat newSize;
+        // Muestro las caras detectadas en la imagen original
+        int widthImageInGrayColor = 40;
+        int posX = 10;
+        for (const auto& cf : faceCodingGray) {
+            // Inserto la imagen en el arbol y obtengo el identificador
+            abb.insert(cf);
+            // Muestro la imagen codificada en la imagen original
+            cvtColor(cf, colorImage, COLOR_GRAY2BGR);
+            resize(colorImage, newSize, Size(widthImageInGrayColor, widthImageInGrayColor), INTER_LINEAR);
+            newSize.copyTo(image(cv::Rect(posX, 10, newSize.cols, newSize.rows)));
+            posX += widthImageInGrayColor + 10;
+        }
+        // Para ver caras detectadas
+        //Muestro las caras encontradas en la imaggen original
+        for (const auto& fm : facesMarkers) {
+            rectangle(image, fm, color, 4);
+        }
+        // Mostrar la imagen con las marcas (rectángulos) indicando la posición de la cara
+        imshow("Detected Face", image);
 
-    // Muestro las caras codificadas
-    for (const auto& cf : faceCodingGray) {
-        imshow("Imagen Codificada", cf);
         waitKey(0);
     }
 
-    // Comparar las distancias entre imágenes
-    Mat img1 = faceCodingGray[0];
-    int sum = 1;
-    for (const auto& cf : faceCodingGray) {
-        double dist = norm(img1, cf, NORM_L2); // Calcular la distancia euclidia
-        cout << "Comparación imagen 1 con imagen " << sum << ":" << dist << endl;
-        sum++;
-    }
+    //    // Comparar las distancias entre imágenes
+    //    Mat img1 = faceCodingGray[0];
+    //    int sum = 1;
+    //    for(const auto &cf : faceCodingGray){
+    //        double dist = norm(img1, cf,NORM_L2); // Calcular la distancia euclidia
+    //        cout << "Comparación imagen 1 con imagen " << sum << ":" << dist << endl;
+    //        sum++;
+    //    }
+    //
 
-    Scalar color(0, 0, 255);
-    //Muestro las caras encontradas en la imaggen original
-    for (const auto& fm : facesMarkers) {
-        rectangle(image, fm, color, 4);
-    }
 
-    // Mostrar la imagen con las marcas (rectángulos) indicando la posición de la cara
-    imshow("Detected Face", image);
-
-    // Esperar hasta presionar la tecla ESC
+        // Esperar hasta presionar la tecla ESC
     while (true) {
         int pressKey = waitKey(100);
         if (pressKey == 27 || pressKey == 113) break;

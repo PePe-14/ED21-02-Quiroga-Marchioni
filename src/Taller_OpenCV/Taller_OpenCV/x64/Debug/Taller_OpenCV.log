@@ -1,3 +1,7 @@
-﻿  Entrega2.cpp
-  LINK : no se encontró C:\Users\jmarc\Documents\GitHub\ED21-02-Quiroga-Marchioni\src\Taller_OpenCV\x64\Debug\Taller_OpenCV.exe o no lo generó el último vínculo incremental; ejecutando vínculo completo
-  Taller_OpenCV.vcxproj -> C:\Users\jmarc\Documents\GitHub\ED21-02-Quiroga-Marchioni\src\Taller_OpenCV\x64\Debug\Taller_OpenCV.exe
+﻿  Entrega3.cpp
+Entrega3.obj : error LNK2019: símbolo externo "public: __cdecl FaceDetector::FaceDetector(void)" (??0FaceDetector@@QEAA@XZ) sin resolver al que se hace referencia en la función main
+Entrega3.obj : error LNK2019: símbolo externo "public: class std::vector<class cv::Rect_<int>,class std::allocator<class cv::Rect_<int> > > __cdecl FaceDetector::detectFaceRectangles(class cv::Mat const &)" (?detectFaceRectangles@FaceDetector@@QEAA?AV?$vector@V?$Rect_@H@cv@@V?$allocator@V?$Rect_@H@cv@@@std@@@std@@AEBVMat@cv@@@Z) sin resolver al que se hace referencia en la función main
+Entrega3.obj : error LNK2019: símbolo externo "public: __cdecl ImageCoding::ImageCoding(void)" (??0ImageCoding@@QEAA@XZ) sin resolver al que se hace referencia en la función main
+Entrega3.obj : error LNK2019: símbolo externo "public: class std::vector<class cv::Mat,class std::allocator<class cv::Mat> > __cdecl ImageCoding::codeGray(class std::vector<class cv::Rect_<int>,class std::allocator<class cv::Rect_<int> > >,bool,class cv::Size_<int>)" (?codeGray@ImageCoding@@QEAA?AV?$vector@VMat@cv@@V?$allocator@VMat@cv@@@std@@@std@@V?$vector@V?$Rect_@H@cv@@V?$allocator@V?$Rect_@H@cv@@@std@@@3@_NV?$Size_@H@cv@@@Z) sin resolver al que se hace referencia en la función main
+Entrega3.obj : error LNK2019: símbolo externo "public: void __cdecl ImageCoding::setImage(class cv::Mat)" (?setImage@ImageCoding@@QEAAXVMat@cv@@@Z) sin resolver al que se hace referencia en la función main
+C:\Users\jmarc\Documents\GitHub\ED21-02-Quiroga-Marchioni\src\Taller_OpenCV\x64\Debug\Taller_OpenCV.exe : fatal error LNK1120: 5 externos sin resolver
