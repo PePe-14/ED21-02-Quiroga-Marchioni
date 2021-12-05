@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Entrega2.cpp">
+    <ClCompile Include="Entrega3.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
