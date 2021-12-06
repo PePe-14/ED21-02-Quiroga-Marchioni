@@ -82,83 +82,83 @@ La clase BinarySearchTreeNode fue creada con el objetivo de almacenar los rostro
 
 #### BinarySearchTree
 
-Esta clase fue necesaria para almacenar mas de un solo rostro y se apoya de la clase nodos que almacena una persona y además tiene una funcion que calcula las cinco personas que se muestran con mas frecuencia.
+Esta clase fue necesaria para almacenar mas de un solo rostro y se apoya de la clase BinarySearchTreeNode que serian los nodos que almacena la imagen de la persona y su identificador que es el "counter".
 	
-	void cincoPersonasMasTiempo() {
-		int* tiempoPrimero = 0;
-		Mat primero;
-		int* tiempoSegundo = 0;
-		Mat segundo;
-		int* tiempoTercero = 0;
-		Mat tercero;
-		int* tiempoCuarto = 0;
-		Mat cuarto;
-		int* tiempoQuinto = 0;
-		Mat quinto;
+	class BinarySearchTree {
 
-		Nodo* current = first;
-		while (current != NULL) {
-			int* tiempoCurrent = (*current).getPersona()->getTiempo();
-			Mat codigoCurrent = (*current).getPersona()->getImagen();
-			...(continua)
+    private:
+        const int DIFFERENT = 1700;
+        const int SIMILAR = 1300;
+        int counter;
+        BinarySearchTreeNode* root;
 
-*Este codigo no se alcanzo a utilizar ya que no se pudo hacer una distinción de los rostros que se capturaban, por lo que todos los tiempos en la pantalla eran iguales. Practicamente lo que hacia era comparar los tiempos y luego asignar su correspondiente imagen tipo Mat.* 
+    public:
+        BinarySearchTree() {
+            counter = 0;
+            root = nullptr;
+        }
+    void insert(Mat image) {
+        root = insert(root, image);
+    }
+    (continua...)
 
-#### Capturar rostro
-El código a continuación captura las coordenadas donde se encontro el rostro y descompone la imagen en una matriz para poder asignarle el rectangulo rojo y despues agregar la captura a un archivo. 
+*Las variables const son parametros para saber si la imagen corresponde a algun rostro que ya esta ingresado o si es uno nuevo, estos se clasifican según lo que indique la distancia euclideana(ver su implementación abajo).* 
 
-	for (size_t i = 0; i < faces.size(); i++)
-	{
-		col.x = faces[i].x;
-		col.y = faces[i].y;
-		col.width = (faces[i].width);
-		col.height = (faces[i].height);
+#### Distancia Euclideana
+El código a continuación se encuentra en la clase del arbol binario como un método que se usa dentro del método insertar. El método euclideanDistance usa dos imagenes y la norma L2 que usa la menor distancia entre dos puntos.  
 
-		filas.x = faces[j].x;
-		filas.y = faces[j].y;
-		filas.width = (faces[j].width);
-		filas.height = (faces[j].height);
+	double euclideanDistance(Mat img1, Mat img2) {
+        	return norm(img1, img2, NORM_L2);
+    	}
+	
+	BinarySearchTreeNode* insert(BinarySearchTreeNode* node, Mat image) {
+	...
+	else if (SIMILAR < euclideanDistance(node->image, image)
+            && DIFFERENT > euclideanDistance(node->image, image)) {
+            node->left = insert(node->left, image);
+        }
+        else if (DIFFERENT <= euclideanDistance(node->image, image)) {
+            node->right = insert(node->right, image);
+        }
+        else { 
+            cout << "Distancia euclidea (Igual): " << euclideanDistance(node->image, image) << endl;
+            node->image = image; 
+            cout << "Cara igual" << endl;
+    
+*Las variables que vimos arriba son la tolerancia que clasifica si una imagen es igual o distinta y aqui se ve su implementación junto a la funcion euclideanDistance que indica a que tipo de imagenes corresponde la imagen analizada respecto a la que contiene un nodo del Arbol.* 
 
-		crop = img(filas);
-		resize(crop, res, Size(128, 128), 0, 0, INTER_LINEAR);
-		cvtColor(crop, gray, COLOR_BGR2GRAY);
+#### CLASE BinarySearchTreeNode
+Esta clase es la base para almacenar los rostros dado que la imagen capturada se guardara en image(tipo Mat) y la variable key sera su identificador correspondiente que sera un número entero.
 
-#### Ingresa una persona a la Linked List
-Esta clase tiene la funcion de verificar que el rostro detectado no haya sido detectado con anterioridad, si es un rostro nuevo es ingresado a la linked list, pero ya que el programa no distingue los rostros, todos son considerados nuevos.
-
-	void add(Persona* persona) {
-		Nodo* node = new Nodo(persona);
-
-		if (first == NULL) {
-			first = node;
-		}
-		else {
-			Nodo* current = first;
-			while (current->getNext() != NULL) {
-				current = current->getNext();
-			}
-			current->setNext(node);
-		}
-		cout << "Se agrego: ";
+	class BinarySearchTreeNode {
+	public:
+    		int key;
+    		Mat image;
+    		BinarySearchTreeNode* left;
+    		BinarySearchTreeNode* right;
 	}
 	
 	
 #### Detector de rostros
 
-El archivo detector de caras utilizado fue haarcascade_frontalface_default.xml. Para utilizarlo se debe crear un objeto que contenga este archivo, por lo que la clase que lo puede contener es CascadeCalssifier;
+El archivo detector de caras utilizado fue haarcascade_frontalface_alt.xml. Para utilizarlo se debe crear un objeto que contenga este archivo, por lo que la clase que lo puede contener es CascadeCalssifier;
 El código para detectar una cara en una imagen se muestra a continuación:
 
-    CascadeClassifier faceCascade;
-    faceCascade.load("haarcascade_frontalface_alt.xml");
+   FaceDetector() {
+        face_cascade.load("haarcascade_frontalface_alt.xml");
+    }
+    const int imageWidth_ = 50;
+    const int imageHeight_ = 50;
+    const double scaleFactor_ = 1.05;
+    const int minNeighbors_ = 8;
+    CascadeClassifier face_cascade;
+    face_cascade.detectMultiScale("Todos los parametros necesarios");
 
-    vector<Rect> faces;
-    faceCascade.detectMultiScale(img,faces,1.1,10);
-
-*En estas cuatro líneas se observa que el archivo .XML se carga a su correspondiente objeto y luego se crea una lista de rectangulos en la que con la ultima linea de codigo todas las caras que fueron detectadas tendran asignado un objeto tipo rectangulo.*
+*En estas líneas se observa que el archivo .XML se carga en el constructor de la clase y luego se detectan las imagenes con los parametros minimos que aparecen arriba como variables constantes.*
 
 ## 3. Resultados obtenidos
 
-Una vez terminada la ejecución del programa esta nos arroja las imágenes una por una señalando las caras que alli aparecen y además por consola se escribe el nombre de la imagen que acaba de ser capturada y con un mensaje del identificador de esta corroborandose que se ha creado el nodo con esa imagen y se ingreso el nodo al Arbol Binario. Cabe destacar que al aparecer los mismos rostros estos no se guardan ya que ya estan reconocidos por la clase FaceDetector.
+Una vez terminada la ejecución del programa esta nos arroja las imágenes una por una señalando las caras que alli aparecen y además por consola se escribe el nombre de la imagen que acaba de ser capturada, ademas de la distancia euclideana y con un mensaje del identificador de imagen corroborandose que se ha creado el nodo con esa imagen y se ingreso el nodo al Arbol Binario. Cabe destacar que al aparecer los mismos rostros estos no se guardan ya que ya estan reconocidos por la clase FaceDetector.
 
 ## 4. Conclusiones
 
