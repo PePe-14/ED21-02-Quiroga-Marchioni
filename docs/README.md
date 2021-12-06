@@ -33,31 +33,31 @@ Construir un programa que almacene en un Árbol binario los rostros que aparecen
 **Objetivos específicos**
 
 - [x] :+1: Crear el código para reconocer rostros en videos.
-- [x] :+1: Crear las clases Persona,Nodo y Linked_List.
-- [x] :+1: Investigar como asociar un rostro capturado a un objeto persona.
-- [x] :+1: Almacenar los rostros de las personas en la Linked_List.
-- [x] :+1: Crear el código para que calcule el tiempo en pantalla de un rostro.
+- [x] :+1: Crear las clases ArbolBinario,NodoArbol, FaceDetector y ImageCoding .
+- [x] :+1: Implementar dichas clases para un correcto almacenamiento de los rostros.
+- [x] :+1: Almacenar los rostros de las distintas personas que se detectaron.
+- [x] :+1: Crear el código para almacenar el video o las imagenes de la sesion diaria.
 
 1. Un código esencial es el que detecta las matrices(rostros).
-2. La clase persona deberá contener un atributo unico para identificarlo y además un atributo de tiempo.
-3. Relacionar las clases con las librerias de OpenCV.
-4. Investigar el formato en que estan los rostros capturados por OpenCV para poder asociarlos a la clase persona. 
+2. La clase NodoArbol deberá contener un atributo unico para identificarlo y además un atributo de tipo Image.
+3. Habra que relacionar las clases con las librerias de OpenCV.
+4. Investigar el formato en que estan los rostros capturados por OpenCV para poder asociarlos a la clase NodoArbol. 
 5. Averiguar como calcular el tiempo que transcurre un rostro en el video.
-6. Establecer un orden descendente de los rostros por el tiempo transcurrido en el video.
+6. Establecer una estructura de datos que almacene el video para la sésion o para la secuencia de imagenes.
 
 ### 1.3 Solución propuesta
 
-Construir una Linked List que almacene objetos tipo Persona que tendrán un atributo con el formato en que son reconocidos los rostros y una vez guardados comparar cuanto tiempo aparecen en el video y sumarle ese tiempo a otro atributo que medira el tiempo. Una vez terminado el video el programa tendra ordenado los rostros de manera descendente en relación a cuanto tiempo se mostraron en el video.
+Construir un Arbol Binario de busqueda que almacene objetos tipo NodoArbol que tendrán un atributo con el formato en que son reconocidos los rostros, estos son objetos de la calse Mat y ádemas un identificador. Con las clases FaceDetector y ImageCoding podremos hacer más facil el trabajo del reconocimiento de rostros y así una vez guardados comparar cuanto tiempo aparecen en el video. Una vez terminado el video el programa tendrá que almacenarlo para una posible revisión.
 
-## 2. Materiales y métodos
+## 2. Materiales, métodos y clases
 
 * IDE Visual Studio Community 2019 
 * Biblioteca OpenCV
-* Archivo haarcascade_frontalface_default.xml 
-* Video con rostros
-* Clase Persona, Nodo_Persona y Linked_List.
+* Archivo haarcascade_frontalface_alt.xml 
+* Video con rostros o secuencia de imágenes
+* BinarySearchTree(), BinarySearchTreeNode() y FaceDetector() y ImageCoding().
 
-Con el uso de la clase Mat de OpenCV podremos capturar la imagen del rostro con el archivo "haarcascade_frontalface_default.xml" y asignarlo como atributo (tipo Mat) a un objeto de tipo persona que se creara al momento de encontrar el rostro. Luego se agregará el objeto persona a la Linked List.
+Con el uso de la clase Mat de OpenCV podremos capturar la imagen del rostro con el archivo "haarcascade_frontalface_alt.xml" y asignarlo como atributo (tipo Mat) a un objeto de tipo BinarySearchTreeNode() que se creara al momento de encontrar el rostro. Luego se agregará el objeto persona al BinarySearchTree().
 
 ### 2.1 Instalación
 
