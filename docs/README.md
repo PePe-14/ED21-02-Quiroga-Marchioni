@@ -63,25 +63,24 @@ Con el uso de la clase Mat de OpenCV podremos capturar la imagen del rostro con 
 
 * IDE Visual Studio Community 2019: Es una IDE que tendrá todo el código del taller en el que se harán las pruebas de código hasta completar el objetivo.  
 * Biblioteca OpenCV: Líbrería libre de visión artificial que cuenta con la mayoria de las herramientas y líbrerias para una correcta compatibilidad con la IDE.
-* Archivo haarcascade_frontalface_default.xml: Archivo clasificador pre entrenado que es capaz de reconocer rostros y otras formas.
+* Archivo haarcascade_frontalface_alt.xml: Archivo clasificador pre entrenado que es capaz de reconocer rostros y otras formas.
 
 ### 2.2 Diseño 
 
-La manera en que diseñamos el taller para la primera historia es simple porque no contiene muchas clases, así que procedere a nombrarlas y explicar su rol en el código
-* Clase Mat: Puede guardar matrices de varias dimesiones por lo que nosotros la usamos para guardar las imagenes de las caras.
+La manera en que diseñamos el taller para las historias 3 y 5 la mostraré a continuación junto a las clases que ádemas procedere a nombrarlas y explicar su rol en el código:
+* Clase BinarySearchTree: Estructura de datos donde se almacenarán los objetos de tipo BinarySearchTreeNode() que corresponden a los rostros detectados.
 * Clase CascadeClassifier: Crea objetos de tipo clasificadores de cascada que en resumen se necesitan muchas imagenes para entrenar a esta función para saber identificar objetos. Esto sera utilizado para cargar el archivo que reconoce los rostros.
-* Clase Rect:  Puede declarar un tipo de variable que permite dibujar zonas rectangulares. Claramente esta clase nos servirá para crear los rectángulos rojos en las imágenes.
-* Clase Persona: Se guardará a la persona con un codigo unico, el tiempo que aparecio en el video y con la imagen del rostro de tipo Mat.
-* Clase Nodo_Persona: Clase que contendrá como atributo una Persona y un puntero a el siguiente nodo.
-* Clase ListaPersonas: Linked_List que almacenara objetos tipo persona cuando el código capture un rostro, además la lista estará ordenada de manera descendente de acuerdo al timepo que hayan sido detectadas por el programa.
+* Clase BinarySearchTreeNode: Estructura de datos donde se crearán los los objetos nodos donde se almacenara a un rostro correspondiente a una persona, junto a atributos como su imagen respectiva y su identificador único que sera un número. Además de contar con los hijos left y right.
+* Clase FaceDetector: Encargada de reconocer los rostros y enmarcarlos en un rectangulo rojo y retonar todos los rostros capturados en un vector tipo Rect.
+* Clase ImageCoding: Encargada de recortar las imágenes para solo almacenar los rostros y retornarlos recortados.
 
 ### 2.3 Implementación
  
 #### Almacenar rostros
 
-La clase Personas fue creada con el objetivo de almacenar los rostros detectados en le video y guardar los segundos y el rostro de la persona.
+La clase BinarySearchTreeNode fue creada con el objetivo de almacenar los rostros detectados en el video con una imagen de tipo MAT y asigarle un identificador al objeto nodo.
 
-#### Linked List
+#### BinarySearchTree
 
 Esta clase fue necesaria para almacenar mas de un solo rostro y se apoya de la clase nodos que almacena una persona y además tiene una funcion que calcula las cinco personas que se muestran con mas frecuencia.
 	
@@ -150,28 +149,20 @@ El archivo detector de caras utilizado fue haarcascade_frontalface_default.xml. 
 El código para detectar una cara en una imagen se muestra a continuación:
 
     CascadeClassifier faceCascade;
-    faceCascade.load("haarcascade_frontalface_default.xml");
+    faceCascade.load("haarcascade_frontalface_alt.xml");
 
     vector<Rect> faces;
     faceCascade.detectMultiScale(img,faces,1.1,10);
 
 *En estas cuatro líneas se observa que el archivo .XML se carga a su correspondiente objeto y luego se crea una lista de rectangulos en la que con la ultima linea de codigo todas las caras que fueron detectadas tendran asignado un objeto tipo rectangulo.*
 
-#### Creacion de los rectangulos
-    
-    Point pt1(faces[i].x, faces[i].y);
-    Point pt2((faces[i].x + faces[i].height), (faces[i].y + faces[i].width));
-    rectangle(img, pt1, pt2, Scalar(0, 0, 255), 2, 8, 0);
-    
-   *Modificamos la manera de hacer los rectángulos y ahora se uso la clase Point para fijar las medidas del rectangulo que se formará en la cara analizada y en el cuarto parametro ponemos el color que en este caso sería rojo como se pidío.*
-
 ## 3. Resultados obtenidos
 
-Una vez terminada la ejecución del programa esta nos arroja el video donde señala a la mayoria de las caras que alli aparecen y además por consola se escribe el nombre de la imagen que acaba de ser capturada y con un mensaje de que un objeto persona que se ha creado a partir de esta captura ha sido ingresada a la Linked List de Personas. Las imágenes son capturadas en cada frame y no supimos como cambiar esta configuración.
+Una vez terminada la ejecución del programa esta nos arroja las imágenes una por una señalando las caras que alli aparecen y además por consola se escribe el nombre de la imagen que acaba de ser capturada y con un mensaje del identificador de esta corroborandose que se ha creado el nodo con esa imagen y se ingreso el nodo al Arbol Binario. Cabe destacar que al aparecer los mismos rostros estos no se guardan ya que ya estan reconocidos por la clase FaceDetector.
 
 ## 4. Conclusiones
 
-Analizando los resultados de nuestra investigación e implementación en el código, podemos llegar a la conclusión de que las estructuras de datos nos ayudan a almacenar de una forma comoda diversos datos que en estos casos fueron los rostros detectados por nuestro algoritmo utilizando OpenCV, esta vez no logramos todos los objetivos, pero si entendimos de mejor manera el funcionamiento de los conocimientos adquiridos. Además recalcar que la interacciÓn entre la IDE y OpenCV facilita en gran parte el poder desarrollar nuestro taller, lo que da un avance en la materia de aprendizaje de nuevas tecnologías. 
+Analizando los resultados de nuestra investigación e implementación en el código, podemos llegar a la conclusión de que las estructuras de datos nos ayudan a almacenar de una forma comoda diversos datos que en estos casos fueron los rostros detectados por nuestro algoritmo utilizando OpenCV, esta vez se logro el objetivo principal que era almacenar los rostros en una Arbol Binario de busqueda. Además recalcar que la interacción entre la IDE y OpenCV facilita en gran parte el poder desarrollar nuestro taller junto a los codigos dados por el profesor, lo que da un avance en la materia de aprendizaje de nuevas tecnologías. Ahora que se tienen las clases necesarias para almacenar correctamente las caras la finalizacion correcta del taller es cada vez más acertada. 
 
 # Anexos
 
