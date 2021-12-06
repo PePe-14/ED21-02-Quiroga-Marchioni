@@ -4,6 +4,7 @@
 #include "opencv2/objdetect.hpp"
 #include <iostream>
 #include <string>
+#include <sstream>
 
 using namespace cv;
 using namespace std;
@@ -24,58 +25,58 @@ public:
 
 #endif //UCN_TALLER_EDATOS_2021_1_BINARYSEARCHTREENODE_H
 
-#ifndef FACEDETECTOR_H
-#define FACEDETECTOR_H
-
-using namespace cv;
 
 class FaceDetector {
 public:
-    explicit FaceDetector();
-
     /**
      * Detectar las caras en una imagen.
      * @param (Mat) imagen fuente para detectar caras
      * @return (vector) un listado de caras detectadas
      */
-    std::vector<Rect> detectFaceRectangles(const Mat& frame);
-
-private:
+    FaceDetector() {
+        face_cascade.load("haarcascade_frontalface_alt.xml");
+    }
 
     /**
      * Ancho de la imange minima que se detectará
      */
-    const int imageWidth_;
+    const int imageWidth_ = 50;
     /**
      * Alto de la imagen minima que se detectará
      */
-    const int imageHeight_;
+    const int imageHeight_ = 50;
     /**
      * Factor de escala que se admitirá para detectar una cara
      */
-    const double scaleFactor_;
+    const double scaleFactor_ = 1.05;
     /**
      * Número de vecinos necesarios para verificar que existe una cara en ese lugar
      */
-    const int minNeighbors_;
+    const int minNeighbors_ = 8;
 
     /**
      * Atributo que contiene al clasificador de caras
      */
     CascadeClassifier face_cascade;
+
+    vector<Rect> detectFaceRectangles(const Mat& frame) {
+
+        vector<Rect> faces;
+        Mat imageGray;
+
+        // Detecto las caras (Se debe pasar la imagen a escala de grises
+        cvtColor(frame, imageGray, COLOR_BGR2GRAY);
+        // Aumento el constraste de una imagen
+        equalizeHist(imageGray, imageGray);
+        face_cascade.detectMultiScale(imageGray,faces,scaleFactor_,minNeighbors_,0 | CASCADE_SCALE_IMAGE,Size(imageWidth_, imageHeight_));
+
+        return faces;
+    }
 };
 
-#endif //FACEDETECTOR_H
-
-#ifndef IMAGE_CODING_HPP
-#define IMAGE_CODING_HPP
-
-using namespace cv;
 
 class ImageCoding {
 public:
-    explicit ImageCoding();
-
     /**
      * Procesar imagen, convertirla en grises, es escalarla y ecualizarla (opcional)
      *
@@ -85,22 +86,47 @@ public:
      * @param size (Size) Tamaño de las imágenes finales. (Todas tendrán ese tamaño)
      * @return (vector) un listado de caras detectadas
      */
-    std::vector<Mat> codeGray(std::vector<Rect> detections, bool equalize, Size size);
+    ImageCoding() {
 
-    /**
-     * Carga la imagen a ser procesada
-     * @param frame (Mat) Imagen original para ser procesada
-     */
-    void setImage(Mat frame);
+    }
 
-private:
     /**
      * Imagen a ser procesada
      */
     Mat frame_;
+
+    vector<Mat> codeGray(vector<Rect> detections, bool equalize, Size size) {
+        Mat cropColor;
+        Mat imageGray;
+        Mat resizedDown;
+
+        std::vector<Mat> cropFaces;
+        for (const auto& det : detections) {
+            // Recorto la imagen detectada
+            cropColor = frame_(det);
+            //Usamos solo imágenes en grises
+            cvtColor(cropColor, imageGray, COLOR_BGR2GRAY);
+            // Si se desea ecualizar la imagen (aumentar contraste)
+            if (equalize) {
+                equalizeHist(imageGray, imageGray);
+            }
+            // Reescalamos
+            resize(imageGray, resizedDown, size, INTER_LINEAR);
+            cropFaces.push_back(resizedDown.clone());
+        }
+
+        return cropFaces;
+    }
+
+    /**
+    * Carga la imagen a ser procesada
+    * @param frame (Mat) Imagen original para ser procesada
+    */
+    void setImage(Mat frame) {
+        frame_ = frame;
+    }
 };
 
-#endif //IMAGE_CODING_HPP
 
 
 class BinarySearchTree {
@@ -162,6 +188,15 @@ class BinarySearchTree {
         return node;
     }
 
+    void preOrder(BinarySearchTreeNode* node) {
+        if (node == nullptr) return;
+        imshow("Detected Face", node->image);  //probar si esta guardadas las caras
+        preOrder(node->left);
+        preOrder(node->right);
+    }
+
+    BinarySearchTreeNode* getRoot() { return root; }
+
     void Destroy(BinarySearchTreeNode* node){
 
         if (node != NULL){
@@ -183,22 +218,16 @@ int main()
 
     vector<string> imagesStr;
     //TODO: Cargar todos los archivos del directorio automáticamente
-    imagesStr.push_back("data/image-007.jpeg");
-    imagesStr.push_back("data/image-008.jpeg");
-    imagesStr.push_back("data/image-024.jpeg");
-    imagesStr.push_back("data/image-025.jpeg");
-    imagesStr.push_back("data/image-026.jpeg");
-    imagesStr.push_back("data/image-046.jpeg");
-    imagesStr.push_back("data/image-047.jpeg");
-
-    cout << "imagesStr = { ";
-    for (string n : imagesStr) {
-        cout << n << ", ";
-    }
-    cout << "};" << endl;
+    imagesStr.push_back("Resources/image-007.jpeg");
+    imagesStr.push_back("Resources/image-008.jpeg");
+    imagesStr.push_back("Resources/image-024.jpeg");
+    imagesStr.push_back("Resources/image-025.jpeg");
+    imagesStr.push_back("Resources/image-026.jpeg");
+    imagesStr.push_back("Resources/image-046.jpeg");
+    imagesStr.push_back("Resources/image-047.jpeg");
 
     // Leemos todas las caras de los archivos de imágenes y las insertamos en el árbol
-    BinarySearchTree abb;
+    BinarySearchTree* abb = new BinarySearchTree();
     FaceDetector fdetector;
     ImageCoding icoding;
     Mat image;
@@ -221,13 +250,14 @@ int main()
         int posX = 10;
         for (const auto& cf : faceCodingGray) {
             // Inserto la imagen en el arbol y obtengo el identificador
-            abb.insert(cf);
+            abb->insert(cf);
             // Muestro la imagen codificada en la imagen original
             cvtColor(cf, colorImage, COLOR_GRAY2BGR);
             resize(colorImage, newSize, Size(widthImageInGrayColor, widthImageInGrayColor), INTER_LINEAR);
             newSize.copyTo(image(cv::Rect(posX, 10, newSize.cols, newSize.rows)));
             posX += widthImageInGrayColor + 10;
         }
+
         // Para ver caras detectadas
         //Muestro las caras encontradas en la imaggen original
         for (const auto& fm : facesMarkers) {
@@ -239,15 +269,7 @@ int main()
         waitKey(0);
     }
 
-    //    // Comparar las distancias entre imágenes
-    //    Mat img1 = faceCodingGray[0];
-    //    int sum = 1;
-    //    for(const auto &cf : faceCodingGray){
-    //        double dist = norm(img1, cf,NORM_L2); // Calcular la distancia euclidia
-    //        cout << "Comparación imagen 1 con imagen " << sum << ":" << dist << endl;
-    //        sum++;
-    //    }
-    //
+    abb->preOrder(abb->getRoot());
 
 
         // Esperar hasta presionar la tecla ESC
@@ -256,6 +278,7 @@ int main()
         if (pressKey == 27 || pressKey == 113) break;
     }
 
+    delete abb;
     destroyAllWindows();
 
     return 0;
