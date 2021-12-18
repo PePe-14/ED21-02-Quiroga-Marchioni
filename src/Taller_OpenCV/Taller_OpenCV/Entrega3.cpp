@@ -269,10 +269,38 @@ int main()
         waitKey(0);
     }
 
-    abb->preOrder(abb->getRoot());
+    //abb->preOrder(abb->getRoot());
 
+    int opcion = 0;
+    int op = 0;
+    cout << "¿Como quiere iniciar sesion? (1-Guardia)(2-Administrador) "<< endl;
+    cout << "Ingrese opcion(1-2):" << endl;
+    cin >> opcion;
 
-        // Esperar hasta presionar la tecla ESC
+    switch (opcion)
+    {
+    case 1:
+        cout << "***Bienvenido al Menu de Guardia***" << endl;
+        cout << "1-Observar todas las caras detectadas por pantalla"<< endl;
+        cout << "2-Observar las últimas 5 caras que mas tiempo fueron vistas en pantalla"<< endl;
+        cout << "Ingrese opción(1-2):" << endl;
+        cin >> op;
+        break;
+
+    case 2:
+        cout << "***Bienvenido al Menu de Administrador***" << endl;
+        cout << "1-Contar con un listado de todas las identidades mostrando cuantas veces salio en pantalla" << endl;
+        cout << "2-Almacenar la secuencia de imagenes para tener evidencia en caso de problemas" << endl;
+        cout << "3-Contar con un listado de todas las identidades mostrando el tiempo que salio en pantalla" << endl;
+        cout << "Ingrese opción(1-2-3):" << endl;
+        cin >> op;
+        break;
+    default:
+        cout << "ERROR!! Ingrese opcion correcta (1-2):" << endl;
+        cin >> opcion;
+        break;
+    }
+    // Esperar hasta presionar la tecla ESC
     while (true) {
         int pressKey = waitKey(100);
         if (pressKey == 27 || pressKey == 113) break;
