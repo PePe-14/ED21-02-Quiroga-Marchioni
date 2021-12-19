@@ -9,21 +9,22 @@
 using namespace cv;
 using namespace std;
 
-#ifndef UCN_TALLER_EDATOS_2021_1_BINARYSEARCHTREENODE_H
-#define UCN_TALLER_EDATOS_2021_1_BINARYSEARCHTREENODE_H
+#ifndef AVLNODE_H
+#define AVLNODE_H
 
 /**
  * Clase que almacena la imagen y el identificador de la cara
  */
-class BinarySearchTreeNode {
+class AVLNode {
 public:
     int key;
     Mat image; // Imagen de tamaño 25x25
-    BinarySearchTreeNode* left;
-    BinarySearchTreeNode* right;
+    AVLNode* left;
+    AVLNode* right;
+    int altura = 0;
 };
 
-#endif //UCN_TALLER_EDATOS_2021_1_BINARYSEARCHTREENODE_H
+#endif //AVLNODE_H
 
 
 class FaceDetector {
@@ -113,6 +114,7 @@ public:
             // Reescalamos
             resize(imageGray, resizedDown, size, INTER_LINEAR);
             cropFaces.push_back(resizedDown.clone());
+            imshow("Cara", cropColor);
         }
 
         return cropFaces;
@@ -128,8 +130,7 @@ public:
 };
 
 
-
-class BinarySearchTree {
+class AVL {
 
     private:
         const int DIFFERENT = 1700;
@@ -138,10 +139,10 @@ class BinarySearchTree {
          * Contador para asignar identificadores a las caras
         */
         int counter;
-        BinarySearchTreeNode* root;
+        AVLNode* root;
 
     public:
-        BinarySearchTree() {
+        AVL() {
             counter = 0;
             root = nullptr;
         }
@@ -159,11 +160,27 @@ class BinarySearchTree {
         return norm(img1, img2, NORM_L2);
     }
 
-    BinarySearchTreeNode* insert(BinarySearchTreeNode* node, Mat image) {
+    bool estaBalanceado(AVLNode* n) {
+        if (n == nullptr) return 0;
+        else {
+            int dif = abs(n->left->altura - n->right->altura);
+            if ( dif <= 1){
+                return dif;
+            }
+        }
+    }
+
+    void calcularAlto(AVLNode* n) {
+        if (n != nullptr) {
+            n->altura = 1 + max(n->left->altura, n->right->altura);
+        }
+    }
+
+    AVLNode* insert(AVLNode* node, Mat image) {
         // Tolerancia para considerar una imagen igual
         //Si el árbol no tiene hijos
         if (node == nullptr) {
-            node = new BinarySearchTreeNode();
+            node = new AVLNode();
             node->key = ++counter;
             node->image = image;
             node->left = nullptr;
@@ -172,32 +189,81 @@ class BinarySearchTree {
             cout << "ID: " << node->key << endl;
             return node;
         }
-        else if (SIMILAR < euclideanDistance(node->image, image)
-            && DIFFERENT > euclideanDistance(node->image, image)) {
+        else if (SIMILAR < euclideanDistance(node->image, image) && DIFFERENT > euclideanDistance(node->image, image)) {
             node->left = insert(node->left, image);
+
+            if (!estaBalanceado(node)) {
+                if (SIMILAR < euclideanDistance(node->left->image, image)) {
+                    node = rotacionDer(node);
+                    cout << "entro11" << endl;
+                }else{
+                    node = dobleDer(node);
+                }
+            }
         }
         else if (DIFFERENT <= euclideanDistance(node->image, image)) {
             node->right = insert(node->right, image);
+
+            if (!estaBalanceado(node)) {
+                if (DIFFERENT <= euclideanDistance(node->right->image, image)) {
+                    node = rotacionIzq(node);
+                    cout << "entro22" << endl;
+                }else{
+                    node = dobleIzq(node);
+                }
+            }
         }
         else { //La cara es igual (menor a la distancia exigida para similar)
             cout << "Distancia euclidea (Igual): " << euclideanDistance(node->image, image) << endl;
             node->image = image; //Cambio la imagen por la nueva
             cout << "Cara igual" << endl;
         }
+        calcularAlto(node);
         cout << "Distancia euclidea: " << euclideanDistance(node->image, image) << endl;
         return node;
     }
 
-    void preOrder(BinarySearchTreeNode* node) {
+    AVLNode* rotacionIzq(AVLNode* n) {
+        AVLNode* current = n->right;
+        n->right = current->left;
+        current->left = n;
+
+        calcularAlto(current);
+        calcularAlto(n);
+        return current;
+    }
+
+    AVLNode* rotacionDer(AVLNode* n) {
+       AVLNode* current = n->left;
+        n->left = current->right;
+        current->right = n;
+
+        calcularAlto(current);
+        calcularAlto(n);
+        return current;
+    }
+
+    AVLNode* dobleIzq(AVLNode* n) {
+        n->right = rotacionDer(n->right);
+        return rotacionIzq(n);
+    }
+
+    AVLNode* dobleDer(AVLNode* n) {
+        n->left = rotacionIzq(n->left);
+        return rotacionDer(n);
+    }
+
+
+    void preOrder(AVLNode* node) {
         if (node == nullptr) return;
         imshow("Detected Face", node->image);  //probar si esta guardadas las caras
         preOrder(node->left);
         preOrder(node->right);
     }
 
-    BinarySearchTreeNode* getRoot() { return root; }
+    AVLNode* getRoot() { return root; }
 
-    void Destroy(BinarySearchTreeNode* node){
+    void Destroy(AVLNode* node){
 
         if (node != NULL){
             Destroy(node->left);
@@ -207,7 +273,7 @@ class BinarySearchTree {
         }
     }
 
-    ~BinarySearchTree() {
+    ~AVL() {
         Destroy(root);
     }
 };
@@ -227,7 +293,7 @@ int main()
     imagesStr.push_back("Resources/image-047.jpeg");
 
     // Leemos todas las caras de los archivos de imágenes y las insertamos en el árbol
-    BinarySearchTree* abb = new BinarySearchTree();
+    AVL* avl = new AVL();
     FaceDetector fdetector;
     ImageCoding icoding;
     Mat image;
@@ -250,7 +316,7 @@ int main()
         int posX = 10;
         for (const auto& cf : faceCodingGray) {
             // Inserto la imagen en el arbol y obtengo el identificador
-            abb->insert(cf);
+            avl->insert(cf);
             // Muestro la imagen codificada en la imagen original
             cvtColor(cf, colorImage, COLOR_GRAY2BGR);
             resize(colorImage, newSize, Size(widthImageInGrayColor, widthImageInGrayColor), INTER_LINEAR);
@@ -265,6 +331,8 @@ int main()
         }
         // Mostrar la imagen con las marcas (rectángulos) indicando la posición de la cara
         imshow("Detected Face", image);
+      
+
 
         waitKey(0);
     }
@@ -273,7 +341,7 @@ int main()
 
     int opcion = 0;
     int op = 0;
-    cout << "¿Como quiere iniciar sesion? (1-Guardia)(2-Administrador) "<< endl;
+    cout << "¿Como quiere iniciar sesion? (1-Guardia)(2-Administrador)(3-Salir) "<< endl;
     cout << "Ingrese opcion(1-2):" << endl;
     cin >> opcion;
 
@@ -295,6 +363,9 @@ int main()
         cout << "Ingrese opción(1-2-3):" << endl;
         cin >> op;
         break;
+
+    case 3:
+        break;
     default:
         cout << "ERROR!! Ingrese opcion correcta (1-2):" << endl;
         cin >> opcion;
@@ -306,7 +377,7 @@ int main()
         if (pressKey == 27 || pressKey == 113) break;
     }
 
-    delete abb;
+    delete avl;
     destroyAllWindows();
 
     return 0;
