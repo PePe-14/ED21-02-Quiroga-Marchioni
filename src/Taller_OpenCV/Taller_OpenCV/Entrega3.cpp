@@ -9,8 +9,7 @@
 using namespace cv;
 using namespace std;
 
-#ifndef AVLNODE_H
-#define AVLNODE_H
+
 
 /**
  * Clase que almacena la imagen y el identificador de la cara
@@ -21,10 +20,16 @@ public:
     Mat image; // Imagen de tamaño 25x25
     AVLNode* left;
     AVLNode* right;
-    int altura = 0;
+    int altura;
+
+    AVLNode(Mat image) {
+        this->image = image;
+        key = 0;
+        left = right = NULL;
+        altura = 0;
+    }
 };
 
-#endif //AVLNODE_H
 
 
 class FaceDetector {
@@ -95,7 +100,7 @@ public:
      * Imagen a ser procesada
      */
     Mat frame_;
-
+    std::vector<Mat> FacesSaves;
     vector<Mat> codeGray(vector<Rect> detections, bool equalize, Size size) {
         Mat cropColor;
         Mat imageGray;
@@ -114,10 +119,15 @@ public:
             // Reescalamos
             resize(imageGray, resizedDown, size, INTER_LINEAR);
             cropFaces.push_back(resizedDown.clone());
-            imshow("Cara", cropColor);
-        }
+            FacesSaves.push_back(cropColor);
+        } 
 
         return cropFaces;
+    }
+
+    vector<Mat> mostrarCaras()
+    {
+        return FacesSaves;
     }
 
     /**
@@ -135,16 +145,13 @@ class AVL {
     private:
         const int DIFFERENT = 1700;
         const int SIMILAR = 1300;
-        /**
-         * Contador para asignar identificadores a las caras
-        */
         int counter;
         AVLNode* root;
 
     public:
         AVL() {
             counter = 0;
-            root = nullptr;
+            root = NULL;
         }
 
     /**
@@ -159,9 +166,88 @@ class AVL {
     double euclideanDistance(Mat img1, Mat img2) {
         return norm(img1, img2, NORM_L2);
     }
+    int height(AVLNode* n) {
+        return n == nullptr ? 0 : n->altura;
+    }
+
+    int getBalance(AVLNode* n) {
+        return n == nullptr ? 0 : height(n->left) - height(n->right);
+    }
+
+    bool isBalanced(AVLNode* n) {
+        return abs(getBalance(n)) <= 1;
+    }
+
+    void updateHeight(AVLNode* n) {
+        if (n != nullptr) n->altura = 1 + max(height(n->left), height(n->right));
+    }
+
+    AVLNode* insert(AVLNode* n,Mat image) {
+        if (n == nullptr) n = new AVLNode(image);
+
+        else if (SIMILAR < euclideanDistance(n->image, image) && DIFFERENT > euclideanDistance(n->image, image)) {
+            n->left = insert(n->left,image);
+
+            /*if (!isBalanced(n)) { //ver si se rota
+                n = (SIMILAR < n->left->image) ? singleRightRotate(n) : doubleRightRotate(n);
+            }*/
+
+        }
+        else if (DIFFERENT <= euclideanDistance(n->image, image)) {
+            n->right = insert(n->right,image);
+
+            /*if (!isBalanced(n)) { //ver si rota
+                n = (x > n->right->image) ? singleLeftRotate(n) : doubleLeftRotate(n);
+            }*/
+        }
+        else { //La cara es igual (menor a la distancia exigida para similar)
+            cout << "Distancia euclidea (Igual): " << euclideanDistance(n->image, image) << endl;
+            n->image = image; //Cambio la imagen por la nueva
+            cout << "Cara igual" << endl;
+        }
+
+        updateHeight(n);
+        return n;
+    }
+
+    AVLNode* singleLeftRotate(AVLNode* t) {
+        AVLNode* oldR = t->right;
+        t->right = oldR->left;
+        oldR->left = t;
+
+        updateHeight(t);
+        updateHeight(oldR);
+
+        return oldR;
+    }
+
+    AVLNode* singleRightRotate(AVLNode* t) {
+        AVLNode* oldL = t->left;
+        t->left = oldL->right;
+        oldL->right = t;
+
+        updateHeight(t);
+        updateHeight(oldL);
+
+        return oldL;
+    }
+
+    AVLNode* doubleLeftRotate(AVLNode* n) {
+        n->right = singleRightRotate(n->right);
+        return singleLeftRotate(n);
+    }
+
+    AVLNode* doubleRightRotate(AVLNode* n) {
+        n->left = singleLeftRotate(n->left);
+        return singleRightRotate(n);
+    }
+
+    /*double euclideanDistance(Mat img1, Mat img2) {
+        return norm(img1, img2, NORM_L2);
+    }
 
     bool estaBalanceado(AVLNode* n) {
-        if (n == nullptr) return 0;
+        if (n == NULL) return 0;
         else {
             int dif = abs(n->left->altura - n->right->altura);
             if ( dif <= 1){
@@ -171,7 +257,7 @@ class AVL {
     }
 
     void calcularAlto(AVLNode* n) {
-        if (n != nullptr) {
+        if (n != NULL) {
             n->altura = 1 + max(n->left->altura, n->right->altura);
         }
     }
@@ -179,17 +265,13 @@ class AVL {
     AVLNode* insert(AVLNode* node, Mat image) {
         // Tolerancia para considerar una imagen igual
         //Si el árbol no tiene hijos
-        if (node == nullptr) {
-            node = new AVLNode();
+        if (node == NULL) {
+            node = new AVLNode(image);
             node->key = ++counter;
-            node->image = image;
-            node->left = nullptr;
-            node->right = nullptr;
-
             cout << "ID: " << node->key << endl;
             return node;
         }
-        else if (SIMILAR < euclideanDistance(node->image, image) && DIFFERENT > euclideanDistance(node->image, image)) {
+        /*else if (SIMILAR < euclideanDistance(node->image, image) && DIFFERENT > euclideanDistance(node->image, image)) {
             node->left = insert(node->left, image);
 
             if (!estaBalanceado(node)) {
@@ -219,7 +301,58 @@ class AVL {
             cout << "Cara igual" << endl;
         }
         calcularAlto(node);
-        cout << "Distancia euclidea: " << euclideanDistance(node->image, image) << endl;
+        //cout << "Distancia euclidea: " << euclideanDistance(node->image, image) << endl;
+        return node;
+    }
+    
+    AVLNode* insert(AVLNode* node, Mat image)
+    {
+        //1. Perform the normal BST insertion 
+        if (node == NULL)
+            return(newNode(key));
+
+        if (key < node->key)
+            node->left = insert(node->left, key);
+        else if (key > node->key)
+            node->right = insert(node->right, key);
+        else // Equal keys are not allowed in BST
+            return node;
+
+        / 2. Update height of this ancestor node /
+        node->height = 1 + max(height(node->left),
+            height(node->right));
+
+         3. Get the balance factor of this ancestor
+            node to check whether this node became
+            unbalanced 
+        int balance = getBalance(node);
+
+        If this node becomes unbalanced, then
+        there are 4 cases
+
+        //Left Left Case
+        if (balance > 1 && key < node->left->key)
+            return rightRotate(node);
+
+        //Right Right Case
+        if (balance < -1 && key > node->right->key)
+            return leftRotate(node);
+
+        //Left Right Case
+        if (balance > 1 && key > node->left->key)
+        {
+            node->left = leftRotate(node->left);
+            return rightRotate(node);
+        }
+
+        Right Left Case
+        if (balance < -1 && key < node->right->key)
+        {
+            node->right = rightRotate(node->right);
+            return leftRotate(node);
+        }
+
+        / return the (unchanged) node pointer /
         return node;
     }
 
@@ -251,11 +384,11 @@ class AVL {
     AVLNode* dobleDer(AVLNode* n) {
         n->left = rotacionIzq(n->left);
         return rotacionDer(n);
-    }
+    }*/
 
 
     void preOrder(AVLNode* node) {
-        if (node == nullptr) return;
+        if (node == NULL) return;
         imshow("Detected Face", node->image);  //probar si esta guardadas las caras
         preOrder(node->left);
         preOrder(node->right);
@@ -331,13 +464,11 @@ int main()
         }
         // Mostrar la imagen con las marcas (rectángulos) indicando la posición de la cara
         imshow("Detected Face", image);
-      
-
 
         waitKey(0);
     }
 
-    //abb->preOrder(abb->getRoot());
+    //avl->preOrder(abb->getRoot());
 
     int opcion = 0;
     int op = 0;
@@ -349,10 +480,15 @@ int main()
     {
     case 1:
         cout << "***Bienvenido al Menu de Guardia***" << endl;
-        cout << "1-Observar todas las caras detectadas por pantalla"<< endl;
-        cout << "2-Observar las últimas 5 caras que mas tiempo fueron vistas en pantalla"<< endl;
-        cout << "Ingrese opción(1-2):" << endl;
-        cin >> op;
+        cout << "Observando todas las caras detectadas por pantalla"<< endl;
+        cout<<"NOTA: Haga click sobre la imagen pequeña y luego presione cualquier letra para pasar las imagenes" << endl;
+        if (op == 0) {
+            vector<Mat> lista = icoding.mostrarCaras();
+            for (Mat image : lista) {
+                imshow("RostrosCapturados", image);
+                waitKey(0);
+            }
+        }
         break;
 
     case 2:
