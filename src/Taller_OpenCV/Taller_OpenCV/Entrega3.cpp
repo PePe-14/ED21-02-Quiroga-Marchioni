@@ -188,17 +188,16 @@ class AVL {
         else if (SIMILAR < euclideanDistance(n->image, image) && DIFFERENT > euclideanDistance(n->image, image)) {
             n->left = insert(n->left,image);
 
-            /*if (!isBalanced(n)) { //ver si se rota
-                n = (SIMILAR < n->left->image) ? singleRightRotate(n) : doubleRightRotate(n);
-            }*/
-
+            if (!isBalanced(n)) { //ver si se rota
+                n = (SIMILAR < euclideanDistance(n->left->image,image)) ? singleRightRotate(n) : doubleRightRotate(n);
+            }
         }
         else if (DIFFERENT <= euclideanDistance(n->image, image)) {
             n->right = insert(n->right,image);
 
-            /*if (!isBalanced(n)) { //ver si rota
-                n = (x > n->right->image) ? singleLeftRotate(n) : doubleLeftRotate(n);
-            }*/
+            if (!isBalanced(n)) { //ver si rota
+                n = (DIFFERENT <= euclideanDistance(n->right->image,image)) ? singleLeftRotate(n) : doubleLeftRotate(n);
+            }
         }
         else { //La cara es igual (menor a la distancia exigida para similar)
             cout << "Distancia euclidea (Igual): " << euclideanDistance(n->image, image) << endl;
@@ -242,9 +241,7 @@ class AVL {
         return singleRightRotate(n);
     }
 
-    /*double euclideanDistance(Mat img1, Mat img2) {
-        return norm(img1, img2, NORM_L2);
-    }
+    /*
 
     bool estaBalanceado(AVLNode* n) {
         if (n == NULL) return 0;
@@ -260,100 +257,6 @@ class AVL {
         if (n != NULL) {
             n->altura = 1 + max(n->left->altura, n->right->altura);
         }
-    }
-
-    AVLNode* insert(AVLNode* node, Mat image) {
-        // Tolerancia para considerar una imagen igual
-        //Si el árbol no tiene hijos
-        if (node == NULL) {
-            node = new AVLNode(image);
-            node->key = ++counter;
-            cout << "ID: " << node->key << endl;
-            return node;
-        }
-        /*else if (SIMILAR < euclideanDistance(node->image, image) && DIFFERENT > euclideanDistance(node->image, image)) {
-            node->left = insert(node->left, image);
-
-            if (!estaBalanceado(node)) {
-                if (SIMILAR < euclideanDistance(node->left->image, image)) {
-                    node = rotacionDer(node);
-                    cout << "entro11" << endl;
-                }else{
-                    node = dobleDer(node);
-                }
-            }
-        }
-        else if (DIFFERENT <= euclideanDistance(node->image, image)) {
-            node->right = insert(node->right, image);
-
-            if (!estaBalanceado(node)) {
-                if (DIFFERENT <= euclideanDistance(node->right->image, image)) {
-                    node = rotacionIzq(node);
-                    cout << "entro22" << endl;
-                }else{
-                    node = dobleIzq(node);
-                }
-            }
-        }
-        else { //La cara es igual (menor a la distancia exigida para similar)
-            cout << "Distancia euclidea (Igual): " << euclideanDistance(node->image, image) << endl;
-            node->image = image; //Cambio la imagen por la nueva
-            cout << "Cara igual" << endl;
-        }
-        calcularAlto(node);
-        //cout << "Distancia euclidea: " << euclideanDistance(node->image, image) << endl;
-        return node;
-    }
-    
-    AVLNode* insert(AVLNode* node, Mat image)
-    {
-        //1. Perform the normal BST insertion 
-        if (node == NULL)
-            return(newNode(key));
-
-        if (key < node->key)
-            node->left = insert(node->left, key);
-        else if (key > node->key)
-            node->right = insert(node->right, key);
-        else // Equal keys are not allowed in BST
-            return node;
-
-        / 2. Update height of this ancestor node /
-        node->height = 1 + max(height(node->left),
-            height(node->right));
-
-         3. Get the balance factor of this ancestor
-            node to check whether this node became
-            unbalanced 
-        int balance = getBalance(node);
-
-        If this node becomes unbalanced, then
-        there are 4 cases
-
-        //Left Left Case
-        if (balance > 1 && key < node->left->key)
-            return rightRotate(node);
-
-        //Right Right Case
-        if (balance < -1 && key > node->right->key)
-            return leftRotate(node);
-
-        //Left Right Case
-        if (balance > 1 && key > node->left->key)
-        {
-            node->left = leftRotate(node->left);
-            return rightRotate(node);
-        }
-
-        Right Left Case
-        if (balance < -1 && key < node->right->key)
-        {
-            node->right = rightRotate(node->right);
-            return leftRotate(node);
-        }
-
-        / return the (unchanged) node pointer /
-        return node;
     }
 
     AVLNode* rotacionIzq(AVLNode* n) {
@@ -481,7 +384,7 @@ int main()
     case 1:
         cout << "***Bienvenido al Menu de Guardia***" << endl;
         cout << "Observando todas las caras detectadas por pantalla"<< endl;
-        cout<<"NOTA: Haga click sobre la imagen pequeña y luego presione cualquier letra para pasar las imagenes" << endl;
+        cout<<"NOTA: Haga click sobre la imagen pequena y luego presione cualquier letra para pasar las imagenes\n" << endl;
         if (op == 0) {
             vector<Mat> lista = icoding.mostrarCaras();
             for (Mat image : lista) {
