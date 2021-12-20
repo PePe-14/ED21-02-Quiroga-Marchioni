@@ -102,7 +102,7 @@ Esta clase fue necesaria para almacenar mas de un solo rostro y se apoya de la c
     }
     (continua...)
 
-*Las variables const son parametros para saber si la imagen corresponde a algun rostro que ya esta ingresado o si es uno nuevo, estos se clasifican según lo que indique la distancia euclideana(ver su implementación abajo).* 
+*Las variables const son parametros para saber si la imagen corresponde a algun rostro que ya esta ingresado o si es uno nuevo, estos se clasifican según lo que indique la distancia euclideana.* 
 
 #### Clase insert
 El código a continuación se encuentra en la clase AVL como un método para insertar los nodos al arbol y ajustando su altura para que se mantenga equilibrado. 
@@ -141,11 +141,19 @@ Esta clase es la base para almacenar los rostros dado que la imagen capturada se
 
 	class AVLNode {
 	public:
-    		int key;
-    		Mat image;
-    		AVLNode* left;
-    		AVLNode* right;
-	}
+	    int key;
+	    Mat image; 
+	    AVLNode* left;
+	    AVLNode* right;
+	    int altura;
+
+	    AVLNode(Mat image) {
+		this->image = image;
+		key = 0;
+		left = right = NULL;
+		altura = 0;
+	    }
+	};
 	
 	
 #### Detector de rostros
