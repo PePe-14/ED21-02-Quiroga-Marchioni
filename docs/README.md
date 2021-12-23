@@ -102,41 +102,58 @@ Esta clase fue necesaria para almacenar mas de un solo rostro y se apoya de la c
     }
     (continua...)
 
-*Las variables const son parametros para saber si la imagen corresponde a algun rostro que ya esta ingresado o si es uno nuevo, estos se clasifican según lo que indique la distancia euclideana(ver su implementación abajo).* 
+*Las variables const son parametros para saber si la imagen corresponde a algun rostro que ya esta ingresado o si es uno nuevo, estos se clasifican según lo que indique la distancia euclideana.* 
 
-#### Distancia Euclideana
-El código a continuación se encuentra en la clase del arbol binario como un método que se usa dentro del método insertar. El método euclideanDistance usa dos imagenes y la norma L2 que usa la menor distancia entre dos puntos.  
+#### Clase insert
+El código a continuación se encuentra en la clase AVL como un método para insertar los nodos al arbol y ajustando su altura para que se mantenga equilibrado. 
 
-	double euclideanDistance(Mat img1, Mat img2) {
-        	return norm(img1, img2, NORM_L2);
-    	}
-	
-	BinarySearchTreeNode* insert(BinarySearchTreeNode* node, Mat image) {
-	...
-	else if (SIMILAR < euclideanDistance(node->image, image)
-            && DIFFERENT > euclideanDistance(node->image, image)) {
-            node->left = insert(node->left, image);
+	 AVLNode* insert(AVLNode* n, Mat image) {
+        if (n == nullptr) n = new AVLNode(image);
+
+        else if (SIMILAR < euclideanDistance(n->image, image) && DIFFERENT > euclideanDistance(n->image, image)) {
+            n->left = insert(n->left, image);
+
+            if (!isBalanced(n)) { //ver si rota
+                n = (SIMILAR < euclideanDistance(n->left->image, image)) ? rotacionDer(n) : dobleDer(n);
+            }
         }
-        else if (DIFFERENT <= euclideanDistance(node->image, image)) {
-            node->right = insert(node->right, image);
+        else if (DIFFERENT <= euclideanDistance(n->image, image)) {
+            n->right = insert(n->right, image);
+
+            if (!isBalanced(n)) { //ver si rota
+                n = (DIFFERENT <= euclideanDistance(n->right->image, image)) ? rotacionIzq(n) : dobleIzq(n);
+            }
         }
         else { 
-            cout << "Distancia euclidea (Igual): " << euclideanDistance(node->image, image) << endl;
-            node->image = image; 
+            cout << "Distancia euclidea (Igual): " << euclideanDistance(n->image, image) << endl;
+            n->image = image; 
             cout << "Cara igual" << endl;
+        }
+
+        calcularAlto(n);
+        return n;
+    }
     
-*Las variables que vimos arriba son la tolerancia que clasifica si una imagen es igual o distinta y aqui se ve su implementación junto a la funcion euclideanDistance que indica a que tipo de imagenes corresponde la imagen analizada respecto a la que contiene un nodo del Arbol.* 
+*Arriba podemos ver que dependiendo de como se claseifique la imagen el arbol se equilibrara para todas las imagenes que entren.* 
 
 #### CLASE AVLNode
 Esta clase es la base para almacenar los rostros dado que la imagen capturada se guardara en image(tipo Mat) y la variable key sera su identificador correspondiente que sera un número entero.
 
 	class AVLNode {
 	public:
-    		int key;
-    		Mat image;
-    		AVLNode* left;
-    		AVLNode* right;
-	}
+	    int key;
+	    Mat image; 
+	    AVLNode* left;
+	    AVLNode* right;
+	    int altura;
+
+	    AVLNode(Mat image) {
+		this->image = image;
+		key = 0;
+		left = right = NULL;
+		altura = 0;
+	    }
+	};
 	
 	
 #### Detector de rostros
@@ -158,7 +175,7 @@ El código para detectar una cara en una imagen se muestra a continuación:
 
 ## 3. Resultados obtenidos
 
-Una vez terminada la ejecución del programa esta nos arroja las imágenes una por una señalando las caras que alli aparecen y además por consola se escribe el nombre de la imagen que acaba de ser capturada, ademas de la distancia euclideana y con un mensaje del identificador de imagen corroborandose que se ha creado el nodo con esa imagen y se ingreso el nodo al Arbol Binario. Cabe destacar que al aparecer los mismos rostros estos no se guardan ya que ya estan reconocidos por la clase FaceDetector.
+Una vez terminada la ejecución del programa esta nos arroja las imágenes una por una señalando las caras que alli aparecen y además por consola se escribe el nombre de la imagen que acaba de ser capturada, ademas de la distancia euclideana y con un mensaje del identificador de imagen corroborandose que se ha creado el nodo con esa imagen y se ingreso el nodo al AVL. Cabe destacar que al aparecer los mismos rostros estos no se guardan ya que ya estan reconocidos por la clase FaceDetector. Ádemas al iniciar sesion como guardia le muestra las caras detectadas por el algoritmo.
 
 ## 4. Conclusiones
 
