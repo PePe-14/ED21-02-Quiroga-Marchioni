@@ -18,12 +18,14 @@ public:
     AVLNode* left;
     AVLNode* right;
     int altura;
+    int veces;
 
     AVLNode(Mat image) {
         this->image = image;
         key = 0;
         left = right = NULL;
         altura = 0;
+        veces = 0;
     }
 };
 
@@ -129,7 +131,11 @@ public:
     }
 
     AVLNode* insert(AVLNode* n, Mat image) {
-        if (n == nullptr) n = new AVLNode(image);
+        if (n == nullptr) {
+            n = new AVLNode(image);
+            n->key = ++counter;
+            n->veces = n->veces + 1;
+        }
 
         else if (SIMILAR < euclideanDistance(n->image, image) && DIFFERENT > euclideanDistance(n->image, image)) {
             n->left = insert(n->left, image);
@@ -149,8 +155,8 @@ public:
             cout << "Distancia euclidea (Igual): " << euclideanDistance(n->image, image) << endl;
             n->image = image; 
             cout << "Cara igual" << endl;
+            n->veces = n->veces + 1;
         }
-
         calcularAlto(n);
         return n;
     }
@@ -202,11 +208,12 @@ public:
     }
 
 
-    void preOrder(AVLNode* node) {
+    void MostrarVeces(AVLNode* node) {
         if (node == NULL) return;
-        imshow("Detected Face", node->image);  //probar si esta guardadas las caras
-        preOrder(node->left);
-        preOrder(node->right);
+        cout << "ID: " << node->key << endl;
+        cout << "Veces que aparecio: " << node->veces << endl;
+        MostrarVeces(node->left);
+        MostrarVeces(node->right);
     }
 
     AVLNode* getRoot() { return root; }
@@ -290,7 +297,7 @@ int main()
 
     int opcion = 0;
     int op = 0;
-    cout << "¿Como quiere iniciar sesion? (1-Guardia)(2-Administrador)(3-Salir) " << endl;
+    cout << "¿Como quiere iniciar sesion? (1-Guardia)(2-Administrador)(3-Salir)" << endl;
     cout << "Ingrese opcion(1-2):" << endl;
     cin >> opcion;
 
@@ -315,16 +322,15 @@ int main()
         break;
 
     case 2:
-        /*cout << "***Bienvenido al Menu de Administrador***" << endl;
-        cout << "1-Contar con un listado de todas las identidades mostrando cuantas veces salio en pantalla" << endl;
-        cout << "2-Almacenar la secuencia de imagenes para tener evidencia en caso de problemas" << endl;
-        cout << "3-Contar con un listado de todas las identidades mostrando el tiempo que salio en pantalla" << endl;
-        cout << "Ingrese opción(1-2-3):" << endl;
-        cin >> op;*/
+        cout << "***Bienvenido al Menu de Administrador***" << endl;
+        cout <<"Contando con un listado de todas las identidades mostrando cuantas veces salio en pantalla"<< endl;
+        cout <<"Almacenando la secuencia de imagenes para tener evidencia en caso de problemas" << endl;
+        avl->MostrarVeces(avl->getRoot());
+        cout << "Presione el cuadro con la imagen y luego presione la tecla Esc" << endl;
         break;
 
     case 3:
-        cout << "Saliendo del programa" << endl;
+        cout <<"Saliendo del programa"<< endl;
         break;
     default:
         cout << "ERROR!! Ingrese opcion correcta (1-2):" << endl;

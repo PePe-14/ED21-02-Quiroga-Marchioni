@@ -1,3 +1,3 @@
 ﻿  EntregaFinal.cpp
-C:\Users\jmarc\Documents\GitHub\ED21-02-Quiroga-Marchioni\src\Taller_OpenCV\Taller_OpenCV\EntregaFinal.cpp(172): warning C4715: 'AVL::isBalanced': no todas las rutas de acceso de control devuelven un valor
+C:\Users\jmarc\Documents\GitHub\ED21-02-Quiroga-Marchioni\src\Taller_OpenCV\Taller_OpenCV\EntregaFinal.cpp(178): warning C4715: 'AVL::isBalanced': no todas las rutas de acceso de control devuelven un valor
   Taller_OpenCV.vcxproj -> C:\Users\jmarc\Documents\GitHub\ED21-02-Quiroga-Marchioni\src\Taller_OpenCV\x64\Debug\Taller_OpenCV.exe
