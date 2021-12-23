@@ -5,6 +5,7 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <ctime>
 
 using namespace cv;
 using namespace std;
@@ -244,6 +245,8 @@ int main()
     ImageCoding icoding;
     Mat image;
     Scalar color(0, 0, 255);
+    unsigned t0, t1;
+    vector<double> TimeSave;
 
     cout << "COLOR";
     for (string im : imagesStr) {
@@ -274,9 +277,13 @@ int main()
             rectangle(image, fm, color, 4);
         }
         
+        t0 = clock();
         imshow("Detected Face", image);
 
         waitKey(0);
+        t1 = clock();
+        double time = (double(t1 - t0) / CLOCKS_PER_SEC);
+        TimeSave.push_back(time);
     }
 
     //avl->preOrder(avl->getRoot());
@@ -291,12 +298,17 @@ int main()
     {
     case 1:
         cout << "***Bienvenido al Menu de Guardia***" << endl;
-        cout << "Observando todas las caras detectadas por pantalla" << endl;
+        cout << "Observando todas las caras detectadas por pantalla y sus tiempos" << endl;
         cout << "NOTA: Haga click sobre la imagen pequena y luego presione cualquier letra para pasar las imagenes\n" << endl;
+        cout << endl;
         if (op == 0) {
             vector<Mat> lista = icoding.mostrarCaras();
             for (Mat image : lista) {
+                
                 imshow("RostrosCapturados", image);
+                double time = TimeSave.back();
+                TimeSave.pop_back();
+                cout << "Execution Time: " << time << endl;
                 waitKey(0);
             }
         }
